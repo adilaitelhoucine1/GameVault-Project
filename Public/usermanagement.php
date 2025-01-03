@@ -70,6 +70,7 @@
                             <th class="px-6 py-3 text-left">Email</th>
                             <th class="px-6 py-3 text-left">Rôle</th>
                             <th class="px-6 py-3 text-left">Actions</th>
+                            <th class="px-6 py-3 text-left">Changer Role</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,10 +88,7 @@
                             <td class="px-6 py-4 text-black">
                             <?php
             echo "<div class='flex gap-2'>
-                    <a href='edituser.php?idEdit=".$user['user_id']."' 
-                    class='px-4 py-2 text-blue-600 hover:text-white hover:bg-blue-600 rounded-lg transition-colors duration-300 border border-blue-600'>
-                    ✏️ Modifier
-                    </a>
+
                     <a href='banuser.php?idBan=".$user['user_id']."' 
                     class='px-4 py-2 text-yellow-600 hover:text-white hover:bg-yellow-600 rounded-lg transition-colors duration-300 border border-yellow-600'>
                     🚫 Bannir
@@ -101,12 +99,21 @@
                     </a>
                 </div>";
 ?>
+ </td>
+ <td class="px-6 py-4 text-black">
+<?php
+echo '<form method="GET" action="update_role.php" class="mt-4">';
+            echo '<input type="hidden" name="user_id" value="' . htmlspecialchars($user['user_id']) . '">';
+            echo '<select name="new_role" class="text-gray-700 p-1 rounded-lg">';
+            echo '<option value=""> Changer le Role</option>';
+            echo '<option value="joueur">🔵 joueur</option>';
+            echo '<option value="admin">🟢 Admin</option>';
+            echo '</select>';
+            echo '<button type="submit" name="modifier_task" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Modifier</button>';
+            echo '</form>';
+  ?>                          
 
-
-
-                            
-
-                              
+</td>                        
                             </td>
                         </tr>
                         <?php endforeach; ?>

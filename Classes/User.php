@@ -109,6 +109,14 @@ class User extends Connect {
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function updateUserRole($user_id, $new_role){
+        $connection = $this->getConnection();
+        $sqlUpdate = "UPDATE users SET Role = ? WHERE user_id = ?";
+        $stmtUpdate = $connection->prepare($sqlUpdate);
+        $stmtUpdate->execute([$new_role, $user_id]);
+    }
+    
 }
 //  $user = new User();
 //  $user->DeleteUser(148);
