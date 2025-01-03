@@ -112,8 +112,60 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                
             </div>
+            <div class="mt-12">
+    <header class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-semibold text-indigo-700">Utilisateurs Bannés</h2>
+    </header>
+
+    <!-- Banned Users Table -->
+    <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+        <table class="w-full">
+            <thead class="bg-red-600 text-white">
+                <tr>
+                    <th class="px-6 py-3 text-left">ID</th>
+                    <th class="px-6 py-3 text-left">Nom</th>
+                    <th class="px-6 py-3 text-left">Email</th>
+                    <th class="px-6 py-3 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $user=new User();
+                $bannedUsers = $user->getBannedUsers(); 
+                
+                foreach($bannedUsers as $bannedUser): ?>
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-6 py-4 text-black"><?php echo $bannedUser['user_id']; ?></td>
+                    <td class="px-6 py-4 text-black"><?php echo $bannedUser['username']; ?></td>
+                    <td class="px-6 py-4 text-black"><?php echo $bannedUser['email']; ?></td>
+                    <td class="px-6 py-4 text-black">
+                        <div class="flex gap-2">
+                            <a href='Debanneruser.php?idUnban=<?php echo $bannedUser['user_id']; ?>' 
+                               class='px-4 py-2 text-green-600 hover:text-white hover:bg-green-600 rounded-lg transition-colors duration-300 border border-green-600'>
+                               ✅ Débannir
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
         </main>
+
+
+
+
+
+
+
+
+
+        
     </div>
 </body>
 </html>

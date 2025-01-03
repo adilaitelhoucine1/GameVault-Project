@@ -51,7 +51,7 @@ class User extends Connect {
 
     public function getAllUsers() {
         $connection = $this->getConnection();
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM users WHERE User_Status = 'NotBanned' ";
         $stmt = $connection->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -59,12 +59,41 @@ class User extends Connect {
 
     public function banUser($user_id) {
         $connection = $this->getConnection();
-        $sql = "INSERT INTO bannes (banne_id,joueur_id) VALUES (?, ?)";
-        $stmt = $connection->prepare($sql);
-        return $stmt->execute([$user_id,$user_id]);
+        
+            $connection->beginTransaction();
+          
+            $sqlInsert = "INSERT INTO bannes (banne_id, joueur_id) VALUES (?, ?)";
+            $stmtInsert = $connection->prepare($sqlInsert);
+            $stmtInsert->execute([$user_id, $user_id]);
+            
+            $sqlUpdate = "UPDATE users SET User_Status = 'banned' WHERE user_id = ?";
+            $stmtUpdate = $connection->prepare($sqlUpdate);
+            $stmtUpdate->execute([$user_id]);
+            
+            $connection->commit();
+            
+            return true;
+
     }
     
+    public function DebannerUser($user_id) {
+        $connection = $this->getConnection();
+        
+            $connection->beginTransaction();
+          
+            $sqlDELETE = "DELETE FROM  bannes WHERE banne_id = ?";
+            $stmtDELETE = $connection->prepare($sqlDELETE);
+            $stmtDELETE->execute([$user_id]);
+            
+            $sqlUpdate = "UPDATE users SET User_Status = 'NotBanned' WHERE user_id = ?";
+            $stmtUpdate = $connection->prepare($sqlUpdate);
+            $stmtUpdate->execute([$user_id]);
+            
+            $connection->commit();
+            
+            return true;
 
+    }
     
     public function DeleteUser($user_id) {
         $connection = $this->getConnection();
@@ -73,8 +102,12 @@ class User extends Connect {
         $stmt->execute([$user_id]);
     
     }
-    public function checkIfBanned($user_id){
-        
+    public function getBannedUsers(){
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM users WHERE User_Status = 'Banned' ";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }
 //  $user = new User();
