@@ -89,6 +89,7 @@
                             <?php
             echo "<div class='flex gap-2'>
 
+            
                     <a href='banuser.php?idBan=".$user['user_id']."' 
                     class='px-4 py-2 text-yellow-600 hover:text-white hover:bg-yellow-600 rounded-lg transition-colors duration-300 border border-yellow-600'>
                     🚫 Bannir
