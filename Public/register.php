@@ -1,3 +1,29 @@
+<?php
+session_start();
+require_once('../Classes/User.php');
+require_once('../Classes/Joueur.php');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $joueur = new Joueur();
+        $result = $joueur->AddJoueur(
+            $_POST['username'],
+            $_POST['email'],
+            $_POST['password'],
+            'basic_functionality'
+        );
+        
+        if($result) {
+            header('Location: login.php?success=1');
+            exit();
+        }
+    } catch(Exception $e) {
+        $error = $e->getMessage();
+    }
+}
+?>
+<!-- Keep existing HTML form -->
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
