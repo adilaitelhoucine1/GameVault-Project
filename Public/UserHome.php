@@ -9,16 +9,10 @@
 </head>
 <body class="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white">
 
-    <!-- Navbar -->
     <nav class="bg-transparent p-6 fixed top-0 left-0 w-full z-10">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="text-3xl font-bold">JeuxVidéo Manager</div>
-            <?php
-require_once('../Classes/User.php');
-    
-echo "Rôle utilisateur: " . $_SESSION['role'] . "\n";
-echo "utilisateur: " . $_SESSION['user_id'] . "\n";
-?>
+
             <div class="space-x-6">
                 <a href="#" class="hover:text-yellow-500 transition-all">Accueil</a>
                 <a href="#bibliotheque" class="hover:text-yellow-500 transition-all">Ma Bibliothèque</a>

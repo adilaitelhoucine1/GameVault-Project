@@ -59,9 +59,9 @@ class User extends Connect {
 
     public function banUser($user_id) {
         $connection = $this->getConnection();
-        $sql = "INSERT INTO bannes (joueur_id, banne_at) VALUES (?, NOW())";
+        $sql = "INSERT INTO bannes (banne_id,joueur_id) VALUES (?, ?)";
         $stmt = $connection->prepare($sql);
-        return $stmt->execute([$user_id]);
+        return $stmt->execute([$user_id,$user_id]);
     }
     
 
@@ -72,6 +72,9 @@ class User extends Connect {
         $stmt = $connection->prepare($sql);
         $stmt->execute([$user_id]);
     
+    }
+    public function checkIfBanned($user_id){
+        
     }
 }
 //  $user = new User();
