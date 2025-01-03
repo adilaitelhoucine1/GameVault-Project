@@ -57,7 +57,15 @@ class User extends Connect {
         return $stmt->fetchAll();
     }
 
+    public function banUser($user_id) {
+        $connection = $this->getConnection();
+        $sql = "INSERT INTO bannes (joueur_id, banne_at) VALUES (?, NOW())";
+        $stmt = $connection->prepare($sql);
+        return $stmt->execute([$user_id]);
+    }
+    
 
+    
     public function DeleteUser($user_id) {
         $connection = $this->getConnection();
         $sql = "DELETE  FROM users WHERE user_id = ?";

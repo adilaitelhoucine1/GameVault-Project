@@ -86,17 +86,22 @@
                             <td class="px-6 py-4 text-black"><?php echo $user['Role']; ?></td>
                             <td class="px-6 py-4 text-black">
                             <?php
-echo "<div class='flex gap-2'>
-        <a href='edituser.php?idEdit=".$user['user_id']."' 
-           class='px-4 py-2 text-blue-600 hover:text-white hover:bg-blue-600 rounded-lg transition-colors duration-300 border border-blue-600'>
-           ✏️ Modifier
-        </a>
-        <a href='deleteuser.php?idDelete=".$user['user_id']."' 
-           class='px-4 py-2 text-red-600 hover:text-white hover:bg-red-600 rounded-lg transition-colors duration-300 border border-red-600'>
-           🗑️ Supprimer
-        </a>
-      </div>";
+            echo "<div class='flex gap-2'>
+                    <a href='edituser.php?idEdit=".$user['user_id']."' 
+                    class='px-4 py-2 text-blue-600 hover:text-white hover:bg-blue-600 rounded-lg transition-colors duration-300 border border-blue-600'>
+                    ✏️ Modifier
+                    </a>
+                    <a href='banuser.php?idBan=".$user['user_id']."' 
+                    class='px-4 py-2 text-yellow-600 hover:text-white hover:bg-yellow-600 rounded-lg transition-colors duration-300 border border-yellow-600'>
+                    🚫 Bannir
+                    </a>
+                    <a href='deleteuser.php?idDelete=".$user['user_id']."' 
+                    class='px-4 py-2 text-red-600 hover:text-white hover:bg-red-600 rounded-lg transition-colors duration-300 border border-red-600'>
+                    🗑️ Supprimer
+                    </a>
+                </div>";
 ?>
+
 
 
                             
