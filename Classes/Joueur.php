@@ -14,14 +14,12 @@ class Joueur extends User {
         $connection->beginTransaction();
     
         try {
-            // Insert into users table
             $sqlUser = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'joueur')";
             $stmtUser = $connection->prepare($sqlUser);
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $stmtUser->execute([$username, $email, $hashedPassword]);
             $userId = $connection->lastInsertId();
             
-            // Insert into joueur table
             $sqlJoueur = "INSERT INTO joueur (joueur_id) VALUES (?)";
             $stmtJoueur = $connection->prepare($sqlJoueur);
             $stmtJoueur->execute([$userId]);
