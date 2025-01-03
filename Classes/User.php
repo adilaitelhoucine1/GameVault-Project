@@ -48,13 +48,26 @@ class User extends Connect {
         }
     }
 
-    public function deconnexion() {
-        session_unset();
-        session_destroy();
-        return true;
+
+    public function getAllUsers() {
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM users";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+
+    public function DeleteUser($user_id) {
+        $connection = $this->getConnection();
+        $sql = "DELETE  FROM users WHERE user_id = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$user_id]);
+    
     }
 }
-// $user = new User();
+//  $user = new User();
+//  $user->DeleteUser(148);
 
 // if($user->AddUser('abdo', 'abdo@test.com', 'abdo123')) {
 //     //print_r($user);

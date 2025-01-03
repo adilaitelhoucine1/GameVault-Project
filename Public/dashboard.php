@@ -38,12 +38,12 @@
       <nav class="mt-8 flex-1">
         <ul class="space-y-6">
           <li>
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+            <a href="dashboard.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
               <span class="text-2xl mr-4">📊</span> Dashboard
             </a>
           </li>
           <li>
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+            <a href="usermanagement.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
               <span class="text-2xl mr-4">👤</span> Utilisateurs
             </a>
           </li>
@@ -60,7 +60,7 @@
         </ul>
       </nav>
       <footer class="p-4 mt-auto border-t border-indigo-600 text-center">
-        <button class="w-full px-4 py-2 bg-red-600 text-white rounded-md shadow-lg hover:bg-red-700 transition">
+        <button class="decon_btn w-full px-4 py-2 bg-red-600 text-white rounded-md shadow-lg hover:bg-red-700 transition">
           🚪 Déconnexion
         </button>
       </footer>
@@ -177,6 +177,9 @@
         },
       }
     });
+    document.querySelector('.decon_btn').addEventListener('click', function() {
+    window.location.href = 'deconnexion.php';
+});
   </script>
 </body>
 </html>
