@@ -54,7 +54,7 @@ if(!($_SESSION['role'] === 'admin')) {
             </a>
           </li>
           <li>
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+            <a href="gamemanagement.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
               <span class="text-2xl mr-4">🎮</span> Jeux
             </a>
           </li>

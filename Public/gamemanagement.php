@@ -106,7 +106,7 @@ if(!($_SESSION['role'] === 'admin')) {
 
             
             
-                    <a href='banuser.php?idBan=".$jeu['jeu_id']."' 
+                    <a href='UpdateGame.php?idUpdate=".$jeu['jeu_id']."' 
                     class='px-4 py-2 text-yellow-600 hover:text-white hover:bg-yellow-600 rounded-lg transition-colors duration-300 border border-yellow-600'>
                     ✏️ Modifier
                     </a>
