@@ -118,18 +118,5 @@ class User extends Connect {
     }
     
 }
-//  $user = new User();
-//  $user->DeleteUser(148);
-
-// if($user->AddUser('abdo', 'abdo@test.com', 'abdo123')) {
-//     //print_r($user);
-    
-//     if($user->connexion("abdo@test.com", "abdo123")) {
-//         echo "Connexion réussie\n";
-//         echo "Rôle utilisateur: " . $_SESSION['user_id'] . "\n";
-//         echo "Rôle utilisateur: " . $_SESSION['role'] . "\n";
-//     } else {
-//         echo "Échec de la connexion\n";
-//     }
-// }   
+ 
 ?>
