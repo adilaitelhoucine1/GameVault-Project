@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!($_SESSION['role'] === 'admin')) {
+  header('Location: login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,7 +40,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+            <a href="gamemanagement.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
               <span class="text-2xl mr-4">🎮</span> Jeux
             </a>
           </li>
@@ -55,9 +61,7 @@
         <main class="flex-1 p-8 overflow-y-auto bg-white bg-opacity-80 rounded-tl-xl rounded-bl-xl shadow-lg">
             <header class="flex justify-between items-center mb-8">
                 <h2 class="text-4xl font-bold text-indigo-700">Gestion des Utilisateurs</h2>
-                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-                    + Ajouter un utilisateur
-                </button>
+              
             </header>
 
             <!-- Users Table -->
@@ -89,7 +93,7 @@
                             <?php
             echo "<div class='flex gap-2'>
 
-            <
+            
                     <a href='banuser.php?idBan=".$user['user_id']."' 
                     class='px-4 py-2 text-yellow-600 hover:text-white hover:bg-yellow-600 rounded-lg transition-colors duration-300 border border-yellow-600'>
                     🚫 Bannir
@@ -175,5 +179,10 @@ echo '<form method="GET" action="update_role.php" class="mt-4">';
 
         
     </div>
+    <script>
+      document.querySelector('.decon_btn').addEventListener('click', function() {
+    window.location.href = 'deconnexion.php';
+});
+    </script>
 </body>
 </html>

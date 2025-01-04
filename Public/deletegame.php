@@ -7,10 +7,12 @@ if(!($_SESSION['role'] === 'admin')) {
 
     require_once('../Classes/User.php');
     require_once('../Classes/Joueur.php');
+    require_once('../Classes/Jeu.php');
+    
     if (isset($_GET['idDelete'])) {
-        $userID = $_GET['idDelete'];
-        $user = new User();
-        $user->deleteUser($userID);
-        header("Location: usermanagement.php"); 
+        $gameID = $_GET['idDelete'];
+        $jeu = new Jeu();
+        $jeu->supprimer_jeu($gameID);
+        header("Location: gamemanagement.php"); 
        }
 ?>

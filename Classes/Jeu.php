@@ -1,5 +1,8 @@
 <?php
-class Jeu {
+session_start();
+require_once('../Config/Connect.php');
+
+class Jeu extends Connect {
     private $jeu_id;
     private $title;
     private $description;
@@ -11,24 +14,37 @@ class Jeu {
     private $date_sortie;
     private $create_at;
 
-    public function afficher_jeu() {
-        // Code pour afficher un jeu
+
+    public function ajouter_jeu($title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie) {
+        $connection = $this->getConnection();
+        
+        $sql = "INSERT INTO jeu (title, description, type, nb_joueur, rating, statut, temps_jeu, date_sortie) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        $stmt = $connection->prepare($sql);
+        return $stmt->execute([$title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie]);
     }
 
-    public function ajouter_jeu() {
-        // Code pour ajouter un jeu
+   
+
+    public function supprimer_jeu($jeu_id) {
+        $connection = $this->getConnection();
+        $sql = "DELETE  FROM jeu WHERE jeu_id = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$jeu_id]);
     }
 
-    public function modifier_jeu() {
-        // Code pour modifier un jeu
-    }
+    
 
-    public function supprimer_jeu() {
-        // Code pour supprimer un jeu
-    }
-
-    public function consulter_statut() {
-        // Code pour consulter le statut d'un jeu
+    public function getAllGames() {
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM jeu";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }
+// $jeu=new Jeu();
+// $jeu->ajouter_jeu("tet","test","test",20,1,"test",21,2021-10-10);
+
 ?>
