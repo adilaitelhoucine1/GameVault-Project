@@ -84,9 +84,9 @@ if (isset($_GET['idUpdate'])) {
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
-                        <span class="text-2xl mr-4">⚙️</span> Paramètres
-                    </a>
+                <a href="UserHome.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+    <span class="text-2xl mr-4">🏠</span> Accueil
+          </a>
                 </li>
             </ul>
         </nav>

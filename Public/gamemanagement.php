@@ -45,9 +45,9 @@ if(!($_SESSION['role'] === 'admin')) {
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
-                            <span class="text-2xl mr-4">⚙️</span> Paramètres
-                        </a>
+                    <a href="UserHome.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+    <span class="text-2xl mr-4">🏠</span> Accueil
+          </a>
                     </li>
                 </ul>
             </nav>
@@ -102,10 +102,6 @@ if(!($_SESSION['role'] === 'admin')) {
                             <?php
             echo "<div class='flex gap-2'>
 
-
-
-            
-            
                     <a href='UpdateGame.php?idUpdate=".$jeu['jeu_id']."' 
                     class='px-4 py-2 text-yellow-600 hover:text-white hover:bg-yellow-600 rounded-lg transition-colors duration-300 border border-yellow-600'>
                     ✏️ Modifier

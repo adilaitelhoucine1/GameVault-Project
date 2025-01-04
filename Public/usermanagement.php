@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once('../Classes/User.php');
 if(!($_SESSION['role'] === 'admin')) {
   header('Location: login.php');
 }
@@ -35,7 +35,7 @@ if(!($_SESSION['role'] === 'admin')) {
             </a>
           </li>
           <li>
-            <a href="usermanagement.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+            <a href="usermanagement.php" class="flex items-center px-6 bg-indigo-600 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
               <span class="text-2xl mr-4">👤</span> Utilisateurs
             </a>
           </li>
@@ -45,9 +45,9 @@ if(!($_SESSION['role'] === 'admin')) {
             </a>
           </li>
           <li>
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
-              <span class="text-2xl mr-4">⚙️</span> Paramètres
-            </a>
+          <a href="UserHome.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+    <span class="text-2xl mr-4">🏠</span> Accueil
+          </a>
           </li>
         </ul>
       </nav>
@@ -79,7 +79,7 @@ if(!($_SESSION['role'] === 'admin')) {
                     </thead>
                     <tbody>
                         <?php
-                        require_once('../Classes/User.php');
+                        
                         $user = new User();
                         $users = $user->getAllUsers(); 
                         

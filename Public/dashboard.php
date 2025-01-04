@@ -44,7 +44,7 @@ if(!($_SESSION['role'] === 'admin')) {
       <nav class="mt-8 flex-1">
         <ul class="space-y-6">
           <li>
-            <a href="dashboard.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+            <a href="dashboard.php" class="flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-600 rounded-lg transition text-xl">
               <span class="text-2xl mr-4">📊</span> Dashboard
             </a>
           </li>
@@ -59,9 +59,10 @@ if(!($_SESSION['role'] === 'admin')) {
             </a>
           </li>
           <li>
-            <a href="#" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
-              <span class="text-2xl mr-4">⚙️</span> Paramètres
-            </a>
+          <a href="UserHome.php" class="flex items-center px-6 py-3 hover:bg-indigo-600 rounded-lg transition text-xl">
+    <span class="text-2xl mr-4">🏠</span> Accueil
+          </a>
+
           </li>
         </ul>
       </nav>
@@ -116,33 +117,26 @@ if(!($_SESSION['role'] === 'admin')) {
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Graphique -->
         <div class="bg-white shadow-2xl rounded-lg p-6">
-          <h3 class="text-xl font-semibold mb-4">Utilisateurs Actifs</h3>
+          <h3 class="text-black text-xl font-semibold mb-4">Utilisateurs Actifs</h3>
           <canvas id="userChart" class="w-full h-64"></canvas>
         </div>
         <!-- Tableau -->
         <div class="bg-white shadow-2xl rounded-lg p-6">
-          <h3 class="text-xl font-semibold mb-4">Utilisateurs Récents</h3>
-          <table class="w-full table-auto text-left">
-            <thead class="bg-indigo-100">
-              <tr>
-                <th class="px-6 py-3 text-sm text-indigo-500">Nom</th>
-                <th class="px-6 py-3 text-sm text-indigo-500">Email</th>
-                <th class="px-6 py-3 text-sm text-indigo-500">Date d'inscription</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-t">
-                <td class="px-6 py-3">John Doe</td>
-                <td class="px-6 py-3">john.doe@example.com</td>
-                <td class="px-6 py-3">01/01/2025</td>
-              </tr>
-              <tr class="border-t">
-                <td class="px-6 py-3">Jane Smith</td>
-                <td class="px-6 py-3">jane.smith@example.com</td>
-                <td class="px-6 py-3">02/01/2025</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="report-container bg-white p-8 rounded-lg shadow-lg mt-8 max-w-3xl mx-auto">
+    <h3 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500 drop-shadow-lg mb-6">
+        Reports
+    </h3>
+
+    <div class="reports-list">
+        <div class="no-reports bg-gray-100 text-center py-10 rounded-lg shadow-md">
+            <span class="text-xl font-semibold text-gray-700">🚫 Aucun Report disponible</span>
+            <p class="mt-4 text-gray-500">Il n'y a actuellement aucun rapport à afficher. Essayez plus tard.</p>
+        </div>
+
+>
+    </div>
+</div>
+          
         </div>
       </div>
     </main>
