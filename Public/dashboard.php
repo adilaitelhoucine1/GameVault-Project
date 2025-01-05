@@ -1,5 +1,8 @@
 <?php
-session_start();
+
+
+require_once('../Classes/User.php');
+require_once('../Classes/Jeu.php');
 if(!($_SESSION['role'] === 'admin')) {
   header('Location: login.php');
 }
@@ -93,12 +96,18 @@ if(!($_SESSION['role'] === 'admin')) {
       <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
         <div class="bg-gradient-to-r from-indigo-600 to-blue-400 text-white shadow-xl rounded-lg p-6 transform transition-all card-hover">
           <h3 class="text-lg font-semibold">Utilisateurs</h3>
-          <p class="text-4xl font-bold mt-4">1,245</p>
+          <p class="text-4xl font-bold mt-4"><?php
+          $user=new User();
+          echo $user->getTotalUsers();  
+          ?></p>
           <p class="text-sm text-indigo-200 mt-2">+12% cette semaine</p>
         </div>
         <div class="bg-gradient-to-r from-green-600 to-teal-400 text-white shadow-xl rounded-lg p-6 transform transition-all card-hover">
           <h3 class="text-lg font-semibold">Jeux Ajoutés</h3>
-          <p class="text-4xl font-bold mt-4">356</p>
+          <p class="text-4xl font-bold mt-4"><?php
+          $jeu=new Jeu();
+          echo $jeu->getTotalGames();  
+          ?></p>
           <p class="text-sm text-green-200 mt-2">+8% cette semaine</p>
         </div>
         <div class="bg-gradient-to-r from-yellow-500 to-orange-400 text-white shadow-xl rounded-lg p-6 transform transition-all card-hover">

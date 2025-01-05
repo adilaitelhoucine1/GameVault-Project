@@ -1,5 +1,6 @@
 <?php
-session_start();
+
+
 require_once('../Config/Connect.php');
 
 class User extends Connect {
@@ -116,7 +117,15 @@ class User extends Connect {
         $stmtUpdate = $connection->prepare($sqlUpdate);
         $stmtUpdate->execute([$new_role, $user_id]);
     }
-    
+    public function getTotalUsers() {
+        $connection = $this->getConnection();
+        $sql = "SELECT COUNT(*) AS total FROM Users";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result['total'];
+    }
 }
- 
+//  $user = new User();
+//  echo $user->getTotalUsers();
 ?>

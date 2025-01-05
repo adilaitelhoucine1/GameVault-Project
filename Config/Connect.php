@@ -1,4 +1,5 @@
 <?php
+session_start();
 class Connect {
     private $host = "localhost";
     private $dbName = "gamevaultproject"; 

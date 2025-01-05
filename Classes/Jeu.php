@@ -1,5 +1,6 @@
 <?php
-session_start();
+
+
 require_once('../Config/Connect.php');
 
 class Jeu extends Connect {
@@ -116,15 +117,26 @@ class Jeu extends Connect {
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
     public function updateJeu($jeu_id, $title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie) {
         $connection = $this->getConnection();
         $sql = "UPDATE jeu SET title = ?, description = ?, type = ?, nb_joueur = ?, rating = ?, statut = ?, temps_jeu = ?, date_sortie = ? WHERE jeu_id = ?";
         $stmt = $connection->prepare($sql);
         return $stmt->execute([$title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie, $jeu_id]);
     }
+
+    public function getTotalGames() {
+        $connection = $this->getConnection();
+        $sql = "SELECT COUNT(*) AS total FROM jeu";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result['total'];
+    }
+    
 }
 //  $jeu=new Jeu();
-//  echo $jeu->getTitle(1);
+//  echo $jeu->getTotalGames();
 // $jeu->ajouter_jeu("tet","test","test",20,1,"test",21,2021-10-10);
 
 ?>
