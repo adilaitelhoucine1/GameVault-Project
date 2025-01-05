@@ -100,18 +100,23 @@ if(!($_SESSION['role'] === 'admin')) {
                             <td class="px-6 py-4 text-black"><?php echo $jeu['date_sortie']; ?></td>
                             <td class="px-6 py-4 text-black">
                             <?php
-            echo "<div class='flex gap-2'>
+echo "<div class='flex gap-2'>
 
-                    <a href='UpdateGame.php?idUpdate=".$jeu['jeu_id']."' 
-                    class='px-4 py-2 text-yellow-600 hover:text-white hover:bg-yellow-600 rounded-lg transition-colors duration-300 border border-yellow-600'>
-                    ✏️ Modifier
-                    </a>
-                    <a href='deletegame.php?idDelete=".$jeu['jeu_id']."' 
-                    class='px-4 py-2 text-red-600 hover:text-white hover:bg-red-600 rounded-lg transition-colors duration-300 border border-red-600'>
-                    🗑️ Supprimer
-                    </a>
-                </div>";
+    <form action='UpdateGame.php' method='POST'>
+        <input type='hidden' name='idUpdate' value='".$jeu['jeu_id']."'>
+        <button type='submit' class='px-4 py-2 text-yellow-600 hover:text-white hover:bg-yellow-600 rounded-lg transition-colors duration-300 border border-yellow-600'>
+            ✏️ Modifier
+        </button>
+    </form>
+
+    <a href='deletegame.php?idDelete=".$jeu['jeu_id']."' 
+       class='px-4 py-2 text-red-600 hover:text-white hover:bg-red-600 rounded-lg transition-colors duration-300 border border-red-600'>
+        🗑️ Supprimer
+    </a>
+
+</div>";
 ?>
+
  </td>
  <td class="px-6 py-4 text-black">
 

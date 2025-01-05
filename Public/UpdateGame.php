@@ -5,11 +5,13 @@ if (!($_SESSION['role'] === 'admin')) {
     exit;
 }
 
-if (isset($_GET['idUpdate'])) {
-    $jeu_id = $_GET['idUpdate'];
+if (isset($_POST['idUpdate'])) {
+    $jeu_id = $_POST['idUpdate'];
+    //echo $jeu_id;
+
     $jeu = new Jeu();
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['UpdateBtn'])) {
         $title = $_POST['title'];
         $description = $_POST['description'];
         $type = $_POST['type'];
@@ -146,7 +148,7 @@ if (isset($_GET['idUpdate'])) {
             <input type="date" id="date_sortie" name="date_sortie" value="<?php echo $date_sortie; ?>" class="text-black w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
         </div>
 
-        <button type="submit" class="w-full px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600">Mettre à jour le Jeu</button>
+        <button type="submit" value="UpdateBtn" class="w-full px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600">Mettre à jour le Jeu</button>
     </form>
         </div>
     </main>
