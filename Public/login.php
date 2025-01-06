@@ -1,4 +1,7 @@
 <?php
+require_once('../Config/Connect.php');
+require_once('../Classes/User.php');
+
 
 require_once('../Config/Connect.php');
 require_once('../Classes/User.php');
@@ -7,18 +10,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = new User();
     
     if($user->connexion($_POST['email'], $_POST['password'])) {
-        if($_SESSION['role'] === 'admin') {
+        if($_SESSION['role'] == 'admin') {
             header('Location: dashboard.php');
             exit();
         } else {
             header('Location: UserHome.php');
             exit();
         }
-    } else {
-        $error = "Email ou mot de passe incorrect";
     }
+    
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="fr">

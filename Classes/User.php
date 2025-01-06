@@ -31,10 +31,6 @@ class User extends Connect {
 
     public function connexion($email, $password) {
         try {
-            if (isset($_SESSION['user_id'])) {
-                return true;
-            }
-
             $sql = "SELECT * FROM users WHERE email = ?";
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$email]);
@@ -43,19 +39,24 @@ class User extends Connect {
             if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['role'] = $user['Role']; 
+                $_SESSION['username'] = $user['username'];
+                
+               // error_log("User role: " . $user['Role']);
+                
                 return true;
             }
             return false;
         } catch (Exception $e) {
-            error_log("Erreur de connexion: " . $e->getMessage());
+            error_log("Login error: " . $e->getMessage());
             return false;
         }
     }
+    
 
     public function AddUser($username, $email, $password) {
         try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (username, email, password, Role) VALUES (?, ?, ?, 'admin')";
+            $sql = "INSERT INTO users (username, email, password, Role) VALUES (?, ?, ?, 'joueur')";
             $stmt = $this->connection->prepare($sql);
             return $stmt->execute([$username, $email, $hashedPassword]);
         } catch (Exception $e) {
@@ -149,5 +150,5 @@ class User extends Connect {
     }
 }
 //  $user = new User();
-//  echo $user->getTotalUsers();
+// $user->AddUser("test", "don@gmail.com", "don");
 ?>
