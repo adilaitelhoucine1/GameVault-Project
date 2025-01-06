@@ -1,7 +1,5 @@
 <?php
-
-
-require_once('../Config/Connect.php');
+require_once(__DIR__ . '/../Config/Connect.php');
 
 class User extends Connect {
     private $user_id;
@@ -12,6 +10,23 @@ class User extends Connect {
 
     public function __construct() {
         $this->connection = $this->getConnection();
+    }
+
+    public function getUserName($id_user) {
+        $connection = $this->getConnection();
+        $sql = "SELECT username FROM users WHERE user_id = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$id_user]);
+        $result = $stmt->fetch();
+        return $result['username'];
+    }
+    public function getEmail($id_user) {
+        $connection = $this->getConnection();
+        $sql = "SELECT email FROM users WHERE user_id = ?";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$id_user]);
+        $result = $stmt->fetch();
+        return $result['email'];
     }
 
     public function connexion($email, $password) {
@@ -124,6 +139,13 @@ class User extends Connect {
         $stmt->execute();
         $result = $stmt->fetch();
         return $result['total'];
+    }
+    public function UpdateProfile($user_id, $username, $email, $password) {
+        $connection = $this->getConnection();
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $sqlUpdate = "UPDATE users SET username = ?, email = ?, password = ? WHERE user_id = ?";
+        $stmtUpdate = $connection->prepare($sqlUpdate);
+        $stmtUpdate->execute([$username, $email, $hashedPassword, $user_id]);
     }
 }
 //  $user = new User();

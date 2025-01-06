@@ -96,7 +96,10 @@ class Jeu extends Connect {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $connection->prepare($sql);
-        return $stmt->execute([$title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie]);
+        $stmt->execute([$title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie]);
+       
+        return $connection->lastInsertId();  
+
     }
 
    
@@ -133,6 +136,14 @@ class Jeu extends Connect {
         $result = $stmt->fetch();
         return $result['total'];
     }
+
+    public function AjouterScreenShot($jeu_id, $image_path) {
+        $connection = $this->getConnection();
+        $sql = "INSERT INTO screenshots (jeu_id, image_path) VALUES (?, ?)";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$jeu_id, $image_path]);
+    }
+    
     
 }
 //  $jeu=new Jeu();

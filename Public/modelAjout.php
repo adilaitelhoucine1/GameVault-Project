@@ -13,8 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statut = $_POST['statut'];
     $temps_jeu = $_POST['temps_jeu'];
     $date_sortie = $_POST['date_sortie'];
+    $screen1 = $_POST['screen1'];
+    $screen2 = $_POST['screen2'];
+    $screen3 = $_POST['screen3'];
     $jeu=new Jeu();
-    $jeu->ajouter_jeu($title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie); 
+    $jeu_id=$jeu->ajouter_jeu($title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie); 
+    $jeu->AjouterScreenShot($jeu_id, $screen1);
+    $jeu->AjouterScreenShot($jeu_id, $screen2);
+    $jeu->AjouterScreenShot($jeu_id, $screen3);
     header('Location: gamemanagement.php');
 } 
 ?>
@@ -128,10 +134,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="date_sortie" class="block text-gray-700 font-medium">Date de Sortie</label>
                     <input type="date" id="date_sortie" name="date_sortie" class="text-black w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
                 </div>
+                <div class="mb-4">
+    <label for="screen1" class="block text-gray-700 font-medium">Screenshot 1</label>
+    <input type="text" id="screen1" name="screen1" placeholder="Enter screenshot URL" class="text-black w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+</div>
+
+<div class="mb-4">
+    <label for="screen2" class="block text-gray-700 font-medium">Screenshot 2</label>
+    <input type="text" id="screen2" name="screen2" placeholder="Enter screenshot URL" class="text-black w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+</div>
+
+<div class="mb-4">
+    <label for="screen3" class="block text-gray-700 font-medium">Screenshot 3</label>
+    <input type="text" id="screen3" name="screen3" placeholder="Enter screenshot URL" class="text-black w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-600" required>
+</div>
 
                 <button type="submit" class="text-black w-full px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600">Ajouter le Jeu</button>
             </form>
         </div>
+        
     </main>
 
     <script>
