@@ -160,6 +160,26 @@ class Jeu extends Connect {
         $stmt = $connection->prepare($sql);
         return $stmt->execute([$user_id, $jeu_id]);
     }
+
+    public function removeFavoris($user_id, $jeu_id) {
+        $connection = $this->getConnection();
+        $sql = "DELETE FROM favoris WHERE joueur_id = ? AND jeu_id = ?";
+        $stmt = $connection->prepare($sql);
+        return $stmt->execute([$user_id, $jeu_id]);
+    }
+    public function getFavorisGames($user_id) {
+    $connection = $this->getConnection();
+    $sql = "SELECT j.*, s.image_path 
+            FROM jeu j 
+            JOIN favoris f ON j.jeu_id = f.jeu_id 
+            LEFT JOIN screenshots s ON j.jeu_id = s.jeu_id 
+            WHERE f.joueur_id = ? 
+            GROUP BY j.jeu_id";
+    $stmt = $connection->prepare($sql);
+    $stmt->execute([$user_id]);
+    return $stmt->fetchAll();
+}
+
     
 }
 //  $jeu=new Jeu();

@@ -5,7 +5,7 @@ if (isset($_GET['idfav'])) {
         $userID = $_SESSION['user_id'];
         // echo $userID;
         $jeu=new Jeu();
-        $jeu->addToFavoris($userID, $jeu_id);
+        $jeu->removeFavoris($userID, $jeu_id);
         header("Location: FavorisList.php");
    
        }
