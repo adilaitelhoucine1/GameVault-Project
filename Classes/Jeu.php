@@ -1,6 +1,4 @@
 <?php
-
-
 require_once('../Config/Connect.php');
 
 class Jeu extends Connect {
@@ -121,6 +119,18 @@ class Jeu extends Connect {
         return $stmt->fetchAll();
     }
 
+    public function getgamewithscreen() {
+        $connection = $this->getConnection();
+        $sql = "SELECT DISTINCT j.*, s.image_path 
+                FROM jeu j 
+                LEFT JOIN screenshots s ON j.jeu_id = s.jeu_id 
+                GROUP BY j.jeu_id";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    
+
     public function updateJeu($jeu_id, $title, $description, $type, $nb_joueur, $rating, $statut, $temps_jeu, $date_sortie) {
         $connection = $this->getConnection();
         $sql = "UPDATE jeu SET title = ?, description = ?, type = ?, nb_joueur = ?, rating = ?, statut = ?, temps_jeu = ?, date_sortie = ? WHERE jeu_id = ?";
@@ -144,6 +154,12 @@ class Jeu extends Connect {
         $stmt->execute([$jeu_id, $image_path]);
     }
     
+    public function addToFavoris($user_id, $jeu_id) {
+        $connection = $this->getConnection();
+        $sql = "INSERT INTO favoris (joueur_id, jeu_id) VALUES (?, ?)";
+        $stmt = $connection->prepare($sql);
+        return $stmt->execute([$user_id, $jeu_id]);
+    }
     
 }
 //  $jeu=new Jeu();

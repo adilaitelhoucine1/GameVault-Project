@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Gestion de Collection de Jeux</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
     <style>
         /* Smooth transitions */
         .transition-all {
@@ -67,7 +69,7 @@
                 <a href="#bibliotheque" class="navbar-link text-lg font-semibold">Ma Bibliothèque</a>
                 <a href="#chat" class="navbar-link text-lg font-semibold">Chat</a>
                 <a href="Joueur/profile.php" class="navbar-link text-lg font-semibold">Profil</a>
-                <a href="deconnexion.php" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-3 rounded-full text-lg font-semibold btn-hover">
+                <a href="index.php" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-3 rounded-full text-lg font-semibold btn-hover">
                     Se déconnecter
                 </a>
             </div>
@@ -90,29 +92,57 @@
         </div>
     </section>
 
-    <!-- Game Library Section -->
     <section id="bibliotheque" class="py-28 bg-gray-800">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 mb-14">Votre Bibliothèque de Jeux</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
-                <!-- Game Card -->
-                <div class="bg-white shadow-2xl rounded-lg overflow-hidden transform hover:scale-110 transition-all">
-                    <img src="https://via.placeholder.com/400x500" alt="Jeu" class="w-full h-60 object-cover">
-                    <div class="p-6 text-center">
-                        <h3 class="text-3xl font-semibold text-gray-800 mb-4">The Witcher 3</h3>
-                        <p class="text-yellow-400 text-lg mb-6">Action / RPG</p>
-                        <div class="flex justify-center items-center space-x-6">
-                            <span class="text-yellow-400 text-xl">⭐ 4.8/5</span>
-                            <button class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-2 rounded-full hover:opacity-80 transition-all">
+    <?php
+    require_once('../Classes/Jeu.php');
+    $jeu = new Jeu();
+    $jeux = $jeu->getgamewithscreen();
+    ?>
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 mb-14">
+            Créez votre première bibliothèque de jeux
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
+            <?php foreach ($jeux as $jeu): ?>
+                <div class="bg-gray-900 shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-all duration-300 relative">
+                    <!-- 'Favoris' -->
+                   
+                    
+                    <a  href="addfavoris.php?idfav=<?php echo $jeu['jeu_id']; ?>" class="absolute top-0 left-1 bg-gradient-to-r from-pink-500 to-yellow-400 text-white p-2 rounded-full hover:opacity-80 transition-all">
+                        <i class="far fa-heart"></i> <!-- Empty heart icon -->
+                    </a>
+                    <!--  'Add to Collection' -->
+                    <button class="absolute bottom-0 right-1 bg-gradient-to-r from-green-500 to-blue-400 text-white p-2 rounded-full hover:opacity-80 transition-all">
+                        <i class="fas fa-plus"></i> 
+                    </button><!-- Empty Heart Icon wrapped in an anchor link -->
+
+
+                    
+                    <!-- Game Image -->
+                    <img src="<?php echo $jeu['image_path']; ?>" alt="<?php echo $jeu['title']; ?>" class="w-full h-60 object-cover">
+
+                    <div class="p-6">
+                        <h3 class="text-3xl font-semibold text-white mb-2"><?php echo $jeu['title']; ?></h3>
+                        <p class="text-yellow-400 text-lg mb-4 uppercase tracking-wide"><?php echo $jeu['type']; ?></p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-yellow-400 text-xl">⭐ <?php echo $jeu['rating']; ?>/5</span>
+                        </div>
+                        <div class="flex justify-between items-center space-x-4">
+                            <button class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-2 rounded-full hover:opacity-90 hover:shadow-lg transition-all duration-300">
                                 Détails
                             </button>
                         </div>
                     </div>
                 </div>
-                <!-- Additional game cards can go here -->
-            </div>
+            <?php endforeach; ?>
         </div>
-    </section>
+    </div>
+</section>
+
+
+
+
+
 
     <!-- Profile & Chat Section -->
     <section id="chat" class="py-28 bg-white">

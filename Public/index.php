@@ -1,3 +1,11 @@
+<?php
+require_once('../Classes/Jeu.php');
+if(isset($_POST['detailsBTN']) && empty($_SESSION['user'])){
+    header('location: login.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,7 +21,9 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="text-3xl font-bold text-yellow-500">JeuxVidéo Manager</div>
             <div>
-                <button class="loginBtn bg-yellow-500 text-gray-900 py-2 px-6 rounded-full text-lg font-semibold hover:bg-yellow-400 transition-all">Se connecter</button>
+            <div>
+    <button class="loginBtn bg-yellow-500 text-gray-900 py-2 px-6 rounded-full text-lg font-semibold hover:bg-yellow-400 transition-all">Se connecter</button>
+</div>
             </div>
         </div>
     </nav>
@@ -34,39 +44,36 @@
             <h2 class="text-4xl font-bold text-yellow-500 mb-10">Découvrez les Jeux</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 <!-- Game Card -->
-                <div class="bg-gray-700 p-6 rounded-lg shadow-xl transform hover:scale-105 transition-all">
-                    <img src="https://via.placeholder.com/300x400" alt="Jeu" class="w-full h-48 object-cover rounded-md mb-4">
-                    <h3 class="text-2xl font-semibold mb-2">The Witcher 3</h3>
-                    <p class="text-yellow-400 mb-4">Action / RPG</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-yellow-500">⭐ 4.8/5</span>
-                        <button class="bg-yellow-500 text-gray-800 px-4 py-2 rounded-full hover:bg-yellow-400 transition-all">Détails</button>
-                    </div>
-                </div>
+                 <?php
 
-                <!-- Additional game cards can go here -->
+require_once('../Classes/Jeu.php');
 
-                <div class="bg-gray-700 p-6 rounded-lg shadow-xl transform hover:scale-105 transition-all">
-                    <img src="https://via.placeholder.com/300x400" alt="Jeu" class="w-full h-48 object-cover rounded-md mb-4">
-                    <h3 class="text-2xl font-semibold mb-2">Red Dead Redemption 2</h3>
-                    <p class="text-yellow-400 mb-4">Aventure / Action</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-yellow-500">⭐ 4.9/5</span>
-                        <button class="bg-yellow-500 text-gray-800 px-4 py-2 rounded-full hover:bg-yellow-400 transition-all">Détails</button>
-                    </div>
-                </div>
 
-                <div class="bg-gray-700 p-6 rounded-lg shadow-xl transform hover:scale-105 transition-all">
-                    <img src="https://via.placeholder.com/300x400" alt="Jeu" class="w-full h-48 object-cover rounded-md mb-4">
-                    <h3 class="text-2xl font-semibold mb-2">Minecraft</h3>
-                    <p class="text-yellow-400 mb-4">Sandbox / Aventure</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-yellow-500">⭐ 4.7/5</span>
-                        <button class="bg-yellow-500 text-gray-800 px-4 py-2 rounded-full hover:bg-yellow-400 transition-all">Détails</button>
-                    </div>
-                </div>
+$jeu = new Jeu();
+$jeux = $jeu->getgamewithscreen();
+foreach ($jeux as $jeu) {
+    echo "
+    <div class='bg-gray-700 p-6 rounded-lg shadow-xl transform hover:scale-105 transition-all'>
+        <img src='{$jeu['image_path']}' alt='Jeu' class='w-full h-48 object-cover rounded-md mb-4'>
+        <h3 class='text-2xl font-semibold mb-2'>{$jeu['title']}</h3>
+        <p class='text-yellow-400 mb-4'>{$jeu['type']}</p>
+        <div class='flex justify-between items-center'>
+            <span class='text-yellow-500'>⭐ {$jeu['rating']}/5</span>
+            <form action='' method='post'>
+                <input type='hidden' name='game_id' value='{$jeu['jeu_id']}'>
+                <button name='detailsBTN' class='bg-yellow-500 text-gray-800 px-4 py-2 rounded-full hover:bg-yellow-400 transition-all'>Détails</button>
+            </form>
+        </div>
+    </div>
+    ";
+}
+?>
 
-                <!-- Add more game cards dynamically -->
+          
+
+
+    
+
             </div>
         </div>
     </section>
@@ -77,6 +84,10 @@
             <p>&copy; 2025 JeuxVidéo Manager. Tous droits réservés.</p>
         </div>
     </footer>
-
+    <script>
+    document.querySelector('.loginBtn').addEventListener('click', function() {
+        window.location.href = 'login.php';
+    });
+</script>
 </body>
 </html>
