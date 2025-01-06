@@ -1,3 +1,7 @@
+<?php
+
+require_once('../Classes/Jeu.php');
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -96,9 +100,6 @@
 
     <section id="bibliotheque" class="py-28 bg-gray-800">
     <?php
- 
-
-    require_once('../Classes/Jeu.php');
     $jeu = new Jeu();
     $jeux = $jeu->getgamewithscreen();
     ?>

@@ -127,7 +127,7 @@ class Jeu extends Connect {
                 GROUP BY j.jeu_id";
         $stmt = $connection->prepare($sql);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetchAll();
     }
     
 
@@ -182,7 +182,14 @@ class Jeu extends Connect {
     }
     public function getGameDetails($jeu_id){
         $connection = $this->getConnection();
-        $sql = "SELECT * FROM jeu WHERE jeu_id = ?";
+        $sql = "SELECT * FROM jeu j join screenshots s ON j.jeu_id = s.jeu_id WHERE j.jeu_id = ? LIMIT 1";
+        $stmt=$connection->prepare($sql);
+        $stmt->execute([$jeu_id]);
+        return $stmt->fetchAll();
+    }
+    public function getGameScreen($jeu_id){
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM screenshots  WHERE jeu_id = ? ";
         $stmt=$connection->prepare($sql);
         $stmt->execute([$jeu_id]);
         return $stmt->fetchAll();
@@ -190,11 +197,19 @@ class Jeu extends Connect {
 
     
 }
-//   $jeu=new Jeu();
-// $details=$jeu->getGameDetails(33);
-// foreach($details as $detail){
-//     echo $detail['title'];
-// }
+//     $jeu=new Jeu();
+   
+// $jeux=$jeu->getgamewithscreen();
+
+// foreach ($jeux as $jeu):
+    
+        
+    
+//         echo $jeu['image_path'];
+      
+    
+// endforeach;
+
 // $jeu->ajouter_jeu("tet","test","test",20,1,"test",21,2021-10-10);
 
 ?>
