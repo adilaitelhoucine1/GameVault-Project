@@ -22,7 +22,7 @@ $jeu = new Jeu();
             <div class="space-x-8 hidden sm:flex">
                 <a href="UserHome.php" class="navbar-link text-lg font-semibold">Accueil</a>
                 <a href="#" class="navbar-link text-lg font-semibold">Ma Bibliothèque</a>
-                <a href="favoris.php" class="navbar-link text-lg font-semibold">Favoris</a>
+                <a href="FavorisList.php" class="navbar-link text-lg font-semibold">Favoris</a>
                 <a href="Joueur/profile.php" class="navbar-link text-lg font-semibold">Profil</a>
             </div>
         </div>

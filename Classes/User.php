@@ -88,6 +88,8 @@ class User extends Connect {
             $stmtUpdate->execute([$user_id]);
             
             $connection->commit();
+
+            
             
             return true;
 

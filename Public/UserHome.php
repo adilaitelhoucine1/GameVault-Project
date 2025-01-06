@@ -68,6 +68,8 @@
                 <a href="#" class="navbar-link text-lg font-semibold">Accueil</a>
                 <a href="#bibliotheque" class="navbar-link text-lg font-semibold">Ma Bibliothèque</a>
                 <a href="#chat" class="navbar-link text-lg font-semibold">Chat</a>
+                <a href="FavorisList.php" class="navbar-link text-lg font-semibold">Favoris</a>
+
                 <a href="Joueur/profile.php" class="navbar-link text-lg font-semibold">Profil</a>
                 <a href="index.php" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-3 rounded-full text-lg font-semibold btn-hover">
                     Se déconnecter
@@ -94,6 +96,8 @@
 
     <section id="bibliotheque" class="py-28 bg-gray-800">
     <?php
+ 
+
     require_once('../Classes/Jeu.php');
     $jeu = new Jeu();
     $jeux = $jeu->getgamewithscreen();
@@ -105,20 +109,18 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
             <?php foreach ($jeux as $jeu): ?>
                 <div class="bg-gray-900 shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-all duration-300 relative">
-                    <!-- 'Favoris' -->
                    
                     
-                    <a  href="addfavoris.php?idfav=<?php echo $jeu['jeu_id']; ?>" class="absolute top-0 left-1 bg-gradient-to-r from-pink-500 to-yellow-400 text-white p-2 rounded-full hover:opacity-80 transition-all">
-                        <i class="far fa-heart"></i> <!-- Empty heart icon -->
+                    <a  href="addfavoris.php?idfav=<?php echo $jeu['jeu_id']; ?>" class="absolute top-0 left-0 bg-gradient-to-r from-pink-500 to-yellow-400 text-white p-2 rounded-b-lg	 hover:opacity-80 transition-all">
+                        <i class="far fa-heart"></i>
                     </a>
-                    <!--  'Add to Collection' -->
                     <button class="absolute bottom-0 right-1 bg-gradient-to-r from-green-500 to-blue-400 text-white p-2 rounded-full hover:opacity-80 transition-all">
                         <i class="fas fa-plus"></i> 
-                    </button><!-- Empty Heart Icon wrapped in an anchor link -->
+                    </button>
 
 
                     
-                    <!-- Game Image -->
+             
                     <img src="<?php echo $jeu['image_path']; ?>" alt="<?php echo $jeu['title']; ?>" class="w-full h-60 object-cover">
 
                     <div class="p-6">
@@ -128,9 +130,12 @@
                             <span class="text-yellow-400 text-xl">⭐ <?php echo $jeu['rating']; ?>/5</span>
                         </div>
                         <div class="flex justify-between items-center space-x-4">
+                        <a href="details-page.php?id_jeu=<?php echo $jeu['jeu_id']; ?>" ">
                             <button class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-2 rounded-full hover:opacity-90 hover:shadow-lg transition-all duration-300">
                                 Détails
                             </button>
+                        </a>
+
                         </div>
                     </div>
                 </div>

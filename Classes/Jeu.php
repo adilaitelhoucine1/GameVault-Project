@@ -127,7 +127,7 @@ class Jeu extends Connect {
                 GROUP BY j.jeu_id";
         $stmt = $connection->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetch();
     }
     
 
@@ -156,34 +156,45 @@ class Jeu extends Connect {
     
     public function addToFavoris($user_id, $jeu_id) {
         $connection = $this->getConnection();
-        $sql = "INSERT INTO favoris (joueur_id, jeu_id) VALUES (?, ?)";
+        $sql = "INSERT INTO favoris (user_id, jeu_id) VALUES (?, ?)";
         $stmt = $connection->prepare($sql);
         return $stmt->execute([$user_id, $jeu_id]);
     }
+    
 
     public function removeFavoris($user_id, $jeu_id) {
         $connection = $this->getConnection();
-        $sql = "DELETE FROM favoris WHERE joueur_id = ? AND jeu_id = ?";
+        $sql = "DELETE FROM favoris WHERE user_id = ? AND jeu_id = ?";
         $stmt = $connection->prepare($sql);
         return $stmt->execute([$user_id, $jeu_id]);
     }
     public function getFavorisGames($user_id) {
-    $connection = $this->getConnection();
-    $sql = "SELECT j.*, s.image_path 
-            FROM jeu j 
-            JOIN favoris f ON j.jeu_id = f.jeu_id 
-            LEFT JOIN screenshots s ON j.jeu_id = s.jeu_id 
-            WHERE f.joueur_id = ? 
-            GROUP BY j.jeu_id";
-    $stmt = $connection->prepare($sql);
-    $stmt->execute([$user_id]);
-    return $stmt->fetchAll();
-}
+        $connection = $this->getConnection();
+        $sql = "SELECT DISTINCT j.*, s.image_path 
+                FROM jeu j 
+                JOIN favoris f ON j.jeu_id = f.jeu_id 
+                LEFT JOIN screenshots s ON j.jeu_id = s.jeu_id 
+                WHERE f.user_id = ? 
+                GROUP BY j.jeu_id";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$user_id]);
+        return $stmt->fetchAll();
+    }
+    public function getGameDetails($jeu_id){
+        $connection = $this->getConnection();
+        $sql = "SELECT * FROM jeu WHERE jeu_id = ?";
+        $stmt=$connection->prepare($sql);
+        $stmt->execute([$jeu_id]);
+        return $stmt->fetchAll();
+    }
 
     
 }
-//  $jeu=new Jeu();
-//  echo $jeu->getTotalGames();
+//   $jeu=new Jeu();
+// $details=$jeu->getGameDetails(33);
+// foreach($details as $detail){
+//     echo $detail['title'];
+// }
 // $jeu->ajouter_jeu("tet","test","test",20,1,"test",21,2021-10-10);
 
 ?>
