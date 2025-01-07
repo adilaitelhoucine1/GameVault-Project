@@ -1,77 +1,36 @@
 <?php
 
-require_once('../Classes/Jeu.php');
+require_once('../Classes/Bibliotheque.php');
+$user_id= $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Gestion de Collection de Jeux</title>
+    <title>Bibliothèque de Jeux</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-
     <style>
-        /* Smooth transitions */
-        .transition-all {
-            transition: all 0.3s ease-in-out;
+        /* Effet de lumière sur les cartes */
+        .card:hover {
+            box-shadow: 0 10px 25px rgba(255, 165, 0, 0.3), 0 4px 15px rgba(255, 99, 71, 0.3);
         }
-        .scale-110:hover {
-            transform: scale(1.1);
-        }
-        /* Custom text-shadow for titles */
-        .text-shadow {
-            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        /* Button animation */
-        .btn-hover:active {
-            transform: scale(0.98);
-        }
-        /* Video container to cover the screen */
-        .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-        /* Custom navbar styling */
-        .navbar-link {
-            color: white;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .navbar-link:hover {
-            color: #fbbf24;
-            transform: scale(1.1);
-        }
-        /* Enhanced button hover */
-        .btn-hover:hover {
-            background-color: #fbbf24;
-            color: #1f2937;
-            transform: scale(1.05);
-        }
-        /* Better overlay for the video */
-        .video-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
-        }
-        @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
 
-.animate-fade-in {
-    animation: fadeIn 0.3s ease-out forwards;
-}
+        /* Animation sur les boutons */
+        .btn-hover:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        /* Titre principal avec glow */
+        .title-glow {
+            text-shadow: 0 4px 6px rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
-<body class="bg-gray-900 font-sans text-gray-100">
+<body class="bg-gradient-to-r from-gray-900 to-gray-800 text-white">
 
-   
-    <nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-black/50 backdrop-blur-sm">
+<nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-black/50 backdrop-blur-sm">
     <div class="max-w-6xl mx-auto px-4">
        
         <div class="flex justify-between items-center py-4">
@@ -158,43 +117,37 @@ require_once('../Classes/Jeu.php');
             </div>
         </div>
     </div>
-    </nav>
+</nav>
 
-    
-    <section class="relative h-screen flex items-center justify-center text-center px-6 sm:px-12">
-        <video autoplay loop muted class="video-container">
-            <source src="../assets/video_bgg.mp4" type="video/mp4">
-            Votre navigateur ne prend pas en charge la balise vidéo.
-        </video>
-        <div class="video-overlay"></div> 
-        <div class="relative z-10 px-6 sm:px-12">
-            <h1 class="text-6xl md:text-7xl font-extrabold leading-tight mb-6 text-white text-shadow">Maîtrisez Votre Collection de Jeux Vidéo</h1>
-            <p class="text-lg md:text-2xl mb-8 font-light text-white text-opacity-90">Suivez vos jeux, partagez vos critiques et connectez-vous avec d'autres joueurs passionnés.</p>
-            <a href="#bibliotheque" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 py-4 px-10 rounded-full text-xl font-semibold btn-hover">
-                Explorer Maintenant
-            </a>
-        </div>
-    </section>
 
-    <section id="bibliotheque" class="py-28 bg-gray-800">
+    <!-- Section Bibliothèque -->
+    <section id="bibliotheque" class="py-28">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 mb-16 title-glow">
+                Explorez Votre Univers de Jeux
+            </h2>
+
+           
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
+               
+                
+
+                
     <?php
-    $jeu = new Jeu();
-    $jeux = $jeu->getgamewithscreen();
+    $bibio = new Bibliotheque();
+    $jeux = $bibio->GetBiblio($user_id);
+    
     ?>
-    <div class="max-w-7xl mx-auto text-center">
-        <h2 class="text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 mb-14">
-            Créez votre première bibliothèque de jeux
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
-            <?php foreach ($jeux as $jeu): ?>
-                <div class="bg-gray-900 shadow-2xl rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-xl transition-all duration-300 relative">
+   
+   <?php foreach ($jeux as $jeu): ?>
+                <div class="bg-gray-900 shadow-lg rounded-xl overflow-hidden transform hover:scale-105 card transition-all duration-300 relative">
                    
                     
                     <a  href="addfavoris.php?idfav=<?php echo $jeu['jeu_id']; ?>" class="absolute top-0 left-0 bg-gradient-to-r from-pink-500 to-yellow-400 text-white p-2 rounded-b-lg	 hover:opacity-80 transition-all">
                         <i class="far fa-heart"></i>
                     </a>
-                    <a href="addbibliotheque.php?idbiblio=<?php echo $jeu['jeu_id']; ?>&pathimage=<?php  echo $jeu['image_path']; ?>" class="absolute bottom-0 right-1 bg-gradient-to-r from-green-500 to-blue-400 text-white p-2 rounded-full hover:opacity-80 transition-all flex items-center justify-center">
-                        <i class="fas fa-plus"></i>
+                    <a href=deletebibliotheque.php?idbiblio=<?php echo $jeu['jeu_id']; ?> class="absolute bottom-0 right-1 bg-gradient-to-r from-green-500 to-blue-400 text-white p-2 rounded-full hover:opacity-80 transition-all flex items-center justify-center">
+                    <i class="fas fa-minus text-lg"></i>
                     </a>
 
 
@@ -211,8 +164,8 @@ require_once('../Classes/Jeu.php');
                         </div>
                         <div class="flex justify-between items-center space-x-4">
                         <a href="details-page.php?id_jeu=<?php echo $jeu['jeu_id']; ?>" ">
-                            <button class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-2 rounded-full hover:opacity-90 hover:shadow-lg transition-all duration-300">
-                                Détails
+                            <button class="inline-block bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-2 rounded-full hover:shadow-xl hover:opacity-90 transition-all duration-300">
+                            Voir les Détails
                             </button>
                         </a>
 
@@ -220,72 +173,10 @@ require_once('../Classes/Jeu.php');
                     </div>
                 </div>
             <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-
-
-
-
-
-
-    
-    <section id="chat" class="py-28 bg-white">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 mb-16">Rejoignez la Communauté</h2>
-            <div class="flex flex-col sm:flex-row justify-between items-center space-y-12 sm:space-y-0 sm:space-x-8">
-               
-                <div class="bg-white p-10 rounded-xl shadow-2xl w-full sm:w-1/3 transform hover:scale-105 transition-all">
-                    <h3 class="text-4xl font-semibold text-gray-800 mb-6">Mon Profil</h3>
-                    <p class="text-gray-600 mb-8">Consultez et personnalisez votre profil. Gérez vos jeux et suivez vos statistiques.</p>
-                    <a href="Joueur/profile.php" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 py-4 px-8 rounded-full text-xl font-semibold btn-hover">
-                        Voir Profil
-                    </a>
-                </div>
-            
-                <div class="bg-white p-10 rounded-xl shadow-2xl w-full sm:w-1/3 transform hover:scale-105 transition-all">
-                    <h3 class="text-4xl font-semibold text-gray-800 mb-6">Chat Communautaire</h3>
-                    <p class="text-gray-600 mb-8">Partagez vos expériences de jeux et discutez avec d'autres joueurs dans des salons dédiés.</p>
-                    <a href="#" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 py-4 px-8 rounded-full text-xl font-semibold btn-hover">
-                        Rejoindre le Chat
-                    </a>
-                </div>
+        
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 py-12">
-        <div class="max-w-7xl mx-auto text-center text-gray-600">
-            <p class="text-lg font-semibold text-white">&copy; 2025 JeuxVidéo Manager. Tous droits réservés.</p>
-        </div>
-    </footer>
-    <script>
-function toggleMobileMenu() {
-    const mobileMenu = document.getElementById('mobile-menu');
-    const isHidden = mobileMenu.classList.contains('hidden');
-    
-    if (isHidden) {
-        mobileMenu.classList.remove('hidden');
-        mobileMenu.classList.add('animate-fade-in');
-    } else {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('animate-fade-in');
-    }
-}
-
-// Ajout de l'effet de scroll
-window.addEventListener('scroll', function() {
-    const nav = document.querySelector('nav');
-    if (window.scrollY > 20) {
-        nav.classList.add('bg-black/90');
-        nav.classList.add('py-2');
-    } else {
-        nav.classList.remove('bg-black/90');
-        nav.classList.remove('py-2');
-    }
-});
-</script>
 
 </body>
 </html>

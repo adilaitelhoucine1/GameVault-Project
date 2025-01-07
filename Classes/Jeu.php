@@ -195,7 +195,12 @@ class Jeu extends Connect {
         return $stmt->fetchAll();
     }
 
-    
+    public function AjouterToBiblio($jeu_id, $userID,$image_path) {
+        $connection = $this->getConnection();
+        $sql = "INSERT INTO bibliotheque (joueur_id	, jeu_id,image_path) VALUES (?, ?,?)";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$userID, $jeu_id,$image_path]);
+    }
 }
 //     $jeu=new Jeu();
    

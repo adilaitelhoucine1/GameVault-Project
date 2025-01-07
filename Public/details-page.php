@@ -1,13 +1,20 @@
 <?php
 require_once('../Classes/Jeu.php');
+require_once('../Classes/Notation.php');
 
 //$jeu_details = [];
 $jeu_id = $_GET['id_jeu'];
 if (isset($_GET['id_jeu'])) {
     $jeu = new Jeu();
+    $note = new Notation();
+    $AVG=$note->getAvgReviews($jeu_id);
     $jeu_details = $jeu->getGameDetails($jeu_id);
     $jeu_screen = $jeu->getGameScreen($jeu_id);
+
+    $note=new Notation();
+    $notation=$note->afficher_notation($jeu_id);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -26,9 +33,9 @@ if (isset($_GET['id_jeu'])) {
                 JeuxVidéo Manager
             </div>
             <div class="space-x-8 hidden sm:flex ">
-                <a href="#" class="navbar-link text-lg font-semibold">Accueil</a>
-                <a href="#bibliotheque" class="navbar-link text-lg font-semibold">Ma Bibliothèque</a>
-                <a href="#chat" class="navbar-link text-lg font-semibold">Chat</a>
+                <a href="UserHome.php" class="navbar-link text-lg font-semibold">Accueil</a>
+                <a href="" class="navbar-link text-lg font-semibold">Ma Bibliothèque</a>
+                <a href="" class="navbar-link text-lg font-semibold">Chat</a>
                 <a href="FavorisList.php" class="navbar-link text-lg font-semibold">Favoris</a>
 
                 <a href="Joueur/profile.php" class="navbar-link text-lg font-semibold">Profil</a>
@@ -54,7 +61,7 @@ if (isset($_GET['id_jeu'])) {
                                     <h1 class="text-4xl font-bold mb-4"><?php echo $jeu['title']; ?></h1>
                                     <div class="flex items-center gap-4 mb-6">
                                         <span class="px-4 py-2 bg-indigo-600 rounded-full"><?php echo $jeu['type']; ?></span>
-                                        <span class="text-yellow-400 text-xl">⭐ <?php echo $jeu['rating']; ?>/5</span>
+                                        <span class="text-yellow-400 text-xl">⭐ <?php echo $AVG; ?>/5</span>
                                         <span class="text-amber-500 text-xl"><?php echo $jeu['date_sortie']; ?></span>
                                     </div>
                                     <p class="text-gray-300 mb-6"><?php echo $jeu['description']; ?></p>
@@ -112,7 +119,6 @@ if (isset($_GET['id_jeu'])) {
                             </div>
                         </div>
 
-                        <!-- Chat Input -->
                         <div class="p-4 border-t border-gray-700">
                             <div class="flex gap-2">
                                 <input type="text" placeholder="Écrivez votre message..." 
@@ -127,6 +133,45 @@ if (isset($_GET['id_jeu'])) {
             </div>
         </div>
     </div>
+    
+
+
+
+    <div class="container mx-auto px-6 py-8">
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-10">Avis des utilisateurs</h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <?php foreach ($notation as $note): ?>
+        <div class="bg-white p-6 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+            <div class="flex items-center mb-4">
+            <i class="fa fa-user text-black mr-4"></i>
+
+
+                <div class="text-xl font-semibold text-gray-800"><?php echo htmlspecialchars($note['username']); ?></div>
+               
+
+                <div class="ml-4 text-yellow-400 flex">
+                    <?php 
+                        $stars = $note['rating']; 
+                        for ($i = 0; $i < 5; $i++) {
+                            if($i < $stars){
+                                echo '⭐';
+                            } else{
+
+                                echo '☆'; 
+                            }
+                        }
+                    ?>
+                </div>
+                <div class="ml-4 text-sm text-gray-500"><?php echo $note['create_at']; ?></div>
+            </div>
+            <p class="text-gray-700 text-base leading-relaxed"><?php echo $note['content']; ?></p>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+    </div>
+
 <!-- modeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeel -->
 
 <div id="rating-modal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
