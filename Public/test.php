@@ -1,4 +1,5 @@
 <?php
-session_start();
-echo $_SESSION['role'];
+$rate=$_POST['rating'];
+echo $rate;
+
 ?>

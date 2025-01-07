@@ -1,9 +1,9 @@
 <?php
 require_once('../Classes/Jeu.php');
 
-$jeu_details = [];
+//$jeu_details = [];
+$jeu_id = $_GET['id_jeu'];
 if (isset($_GET['id_jeu'])) {
-    $jeu_id = $_GET['id_jeu'];
     $jeu = new Jeu();
     $jeu_details = $jeu->getGameDetails($jeu_id);
     $jeu_screen = $jeu->getGameScreen($jeu_id);
@@ -20,6 +20,25 @@ if (isset($_GET['id_jeu'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-900 font-sans text-gray-100">
+<nav class="bg-black bg-opacity-50  w-full z-20 top-0 left-0 py-6 shadow-lg">
+        <div class="max-w-6xl mx-auto flex justify-between content-center   items-center px-6">
+            <div class="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400">
+                JeuxVidéo Manager
+            </div>
+            <div class="space-x-8 hidden sm:flex ">
+                <a href="#" class="navbar-link text-lg font-semibold">Accueil</a>
+                <a href="#bibliotheque" class="navbar-link text-lg font-semibold">Ma Bibliothèque</a>
+                <a href="#chat" class="navbar-link text-lg font-semibold">Chat</a>
+                <a href="FavorisList.php" class="navbar-link text-lg font-semibold">Favoris</a>
+
+                <a href="Joueur/profile.php" class="navbar-link text-lg font-semibold">Profil</a>
+                <a href="index.php" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-3 rounded-full text-lg font-semibold btn-hover">
+                    Se déconnecter
+                </a>
+            </div>
+        </div>
+    </nav>
+
     <div class="relative min-h-screen">
         <div class="container mx-auto px-4 pt-32">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -53,10 +72,10 @@ if (isset($_GET['id_jeu'])) {
                                     </div>
 
                                     <div class="flex gap-4">
-                                        <button class="px-6 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 rounded-full font-bold">
-                                            Ajouter aux favoris
+                                        <button class="px-6 py-3 bg-gradient-to-r from-yellow-400 to-pink-500 rounded-full font-bold" id="showRating">
+                                        Ajouter Une Note ⭐
                                         </button>
-                                        <button class="px-6 py-3 bg-indigo-600 rounded-full font-bold">
+                                        <button class="px-6 py-3 bg-indigo-00 rounded-full font-bold">
                                             Ajouter à ma bibliothèque
                                         </button>
                                     </div>
@@ -108,5 +127,75 @@ if (isset($_GET['id_jeu'])) {
             </div>
         </div>
     </div>
+<!-- modeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeel -->
+
+<div id="rating-modal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+  <div class="bg-white shadow-2xl rounded-lg p-6 max-w-md w-full relative">
+    <!-- Close Button -->
+    <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition duration-300">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+  
+    <h1 class="text-3xl font-bold text-gray-800 text-center mb-4">Donnez votre avis</h1>
+    <p class="text-sm text-gray-600 text-center mb-6">Sélectionnez une note entre 1 et 5 étoiles :</p>
+
+   
+    <form id="rating-form" method="POST" action="rating.php" class="flex flex-col items-center gap-4">
+      
+      <div class="flex justify-center space-x-2 mb-6">
+        <input type="hidden" id="jeuID" name="jeuID" value="<?php echo $jeu_id; ?>">
+
+        <input type="radio" id="star5" name="rating" value="5" class="hidden peer">
+        <label for="star5" class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 transition duration-300">★</label>
+
+        <input type="radio" id="star4" name="rating" value="4" class="hidden peer">
+        <label for="star4" class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 transition duration-300">★</label>
+
+        <input type="radio" id="star3" name="rating" value="3" class="hidden peer">
+        <label for="star3" class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 transition duration-300">★</label>
+
+        <input type="radio" id="star2" name="rating" value="2" class="hidden peer">
+        <label for="star2" class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 transition duration-300">★</label>
+
+        <input type="radio" id="star1" name="rating" value="1" class="hidden peer">
+        <label for="star1" class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 transition duration-300">★</label>
+      </div>
+
+      <div class="w-full">
+        <label for="reviewContent" class="block text-sm font-medium text-gray-700 mb-2">
+          Votre avis :
+        </label>
+        <input
+          type="text"
+          id="reviewContent"
+          name="reviewContent"
+          class="text-black w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+          placeholder="Écrivez votre avis ici..."
+        />
+      </div>
+
+      <button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition duration-300">
+        Soumettre
+      </button>
+    </form>
+  </div>
+</div>
+
+  <script>
+    const modal = document.getElementById("rating-modal");
+    const closeModal = document.getElementById("close-modal");
+    const showRating = document.getElementById("showRating");
+
+    closeModal.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+    showRating.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+    });
+  </script>
+
 </body>
 </html>

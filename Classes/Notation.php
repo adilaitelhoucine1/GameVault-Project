@@ -1,5 +1,7 @@
 <?php
-class Notation {
+require_once('../Config/Connect.php');
+
+class Notation extends Connect{
     private $notation_id;
     private $joueur_id;
     private $jeu_id;
@@ -8,11 +10,14 @@ class Notation {
     private $create_at;
 
     public function afficher_notation() {
-        // Code pour afficher une notation
     }
 
-    public function ajouter_notation() {
-        // Code pour ajouter une notation
+    public function ajouter_notation($user_id,$jeu_id,$rating,$content) {
+        $connection = $this->getConnection();
+        $sql = "INSERT INTO notation (joueur_id,jeu_id,rating,content) VALUES (?, ? ,? ,?)";
+        $stmt = $connection->prepare($sql);
+        $stmt->execute([$user_id, $jeu_id, $rating, $content]);
     }
 }
+
 ?>
