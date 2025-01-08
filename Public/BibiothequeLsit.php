@@ -45,7 +45,7 @@ $user_id= $_SESSION['user_id'];
             
             <div class="hidden lg:flex items-center space-x-8">
              
-                <a href="#" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
+                <a href="UserHome.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
                     <span class="flex items-center">
                         <i class="fas fa-home mr-2 transition-transform duration-300 group-hover:scale-110"></i>
                         Accueil

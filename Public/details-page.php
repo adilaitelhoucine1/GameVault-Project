@@ -1,6 +1,7 @@
 <?php
 require_once('../Classes/Jeu.php');
 require_once('../Classes/Notation.php');
+require_once('../Classes/Chat.php');
 
 //$jeu_details = [];
 $jeu_id = $_GET['id_jeu'];
@@ -13,6 +14,10 @@ if (isset($_GET['id_jeu'])) {
 
     $note=new Notation();
     $notation=$note->afficher_notation($jeu_id);
+
+    $Chat= new Chat();
+    $Comments=$Chat->afficher_chat($jeu_id);
+   // print_r($Comments);
 }
 
 ?>
@@ -110,24 +115,34 @@ if (isset($_GET['id_jeu'])) {
                         </div>
                         
                         <div class="flex-1 overflow-y-auto p-4 space-y-4">
-                            <div class="flex gap-3">
-                                <img src="avatar.jpg" class="w-10 h-10 rounded-full">
+                        <?php foreach ($Comments as $comment): ?>
+                            <div class="flex content-center	">
+                            <i class="fa fa-user text-white mt-2 mr-2"></i>
                                 <div class="bg-gray-700 rounded-lg p-3">
-                                    <p class="font-bold text-sm">Username</p>
-                                    <p class="text-gray-300">Message content here</p>
+                                    <p class="font-bold text-sm"><?php echo $comment['username'] ?></p>
+                                    <p class="text-gray-300"><?php echo $comment['message_content'] ?></p>
                                 </div>
                             </div>
+                            <?php endforeach; ?>
                         </div>
 
-                        <div class="p-4 border-t border-gray-700">
-                            <div class="flex gap-2">
-                                <input type="text" placeholder="Écrivez votre message..." 
-                                       class="flex-1 bg-gray-700 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-600">
-                                <button class="bg-indigo-600 rounded-full p-2 hover:bg-indigo-700">
-                                    <i class="fas fa-paper-plane"></i>
-                                </button>
-                            </div>
-                        </div>
+
+
+                        <form action="addcomment.php" method="GET">
+                                <div class="p-4 border-t border-gray-700">
+                                    <div class="flex gap-2">
+                                        <input type="text" name="content" placeholder="Écrivez votre message..." 
+                                            class="flex-1 bg-gray-700 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+
+
+                                        <input type="text" name="jeuid" value ="<?php echo $jeu_id ?>"
+                                            class="hidden">
+                                        <button name ="addcomment" class="bg-indigo-600 rounded-full p-2 hover:bg-indigo-700">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                        </form>
                     </div>
                 </div>
             </div>
