@@ -10,8 +10,22 @@ require_once('../Classes/Jeu.php');
     <title>Accueil - Gestion de Collection de Jeux</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@700&display=swap" rel="stylesheet">
+
 
     <style>
+        .animate-bounce {
+    animation: bounce 1.5s infinite;
+}
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
         /* Smooth transitions */
         .transition-all {
             transition: all 0.3s ease-in-out;
@@ -77,16 +91,20 @@ require_once('../Classes/Jeu.php');
         <div class="flex justify-between items-center py-4">
             
             <div class="group">
-                <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 hover:scale-105 transform transition-all duration-300">
-                    JeuxVidéo Manager
-                </h1>
+            <h1 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-400 hover:scale-110 transform transition-transform duration-300 tracking-wide drop-shadow-lg">
+    <span class="block font-[Lobster] animate-bounce text-white">
+        LO3AB
+    </span>
+   
+</h1>
+
                 <div class="w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-pink-500 to-yellow-400 transition-all duration-300"></div>
             </div>
 
             
             <div class="hidden lg:flex items-center space-x-8">
              
-                <a href="#" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
+                <a href="UserHome.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
                     <span class="flex items-center">
                         <i class="fas fa-home mr-2 transition-transform duration-300 group-hover:scale-110"></i>
                         Accueil
@@ -98,7 +116,7 @@ require_once('../Classes/Jeu.php');
                 <a href="BibiothequeLsit.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
                     <span class="flex items-center">
                         <i class="fas fa-book mr-2 transition-transform duration-300 group-hover:scale-110"></i>
-                        Ma Bibliothèque
+                            Bibliothèque
                     </span>
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
                 </a>
@@ -108,6 +126,13 @@ require_once('../Classes/Jeu.php');
                     <span class="flex items-center">
                         <i class="fas fa-heart mr-2 transition-transform duration-300 group-hover:scale-110"></i>
                         Favoris
+                    </span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="Historique.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
+                    <span class="flex items-center">
+                        <i class="fas fa-heart mr-2 transition-transform duration-300 group-hover:scale-110"></i>
+                        Historique
                     </span>
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
                 </a>
@@ -121,14 +146,26 @@ require_once('../Classes/Jeu.php');
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
                 </a>
 
-               
-                <a href="index.php" class="group relative overflow-hidden bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25">
-                    <span class="flex items-center relative z-10">
-                        <i class="fas fa-sign-out-alt mr-2 transition-transform duration-300 group-hover:rotate-12"></i>
-                        Se déconnecter
-                    </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                </a>
+                <?php if(!empty($_SESSION['user_id'])){
+
+                    echo '<a href="index.php" class="group relative overflow-hidden bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25">';
+                    echo '    <span class="flex items-center relative z-10">';
+                       echo     ' <i class="fas fa-sign-out-alt mr-2 transition-transform duration-300 group-hover:rotate-12"></i>';
+                        echo'    Se déconnecter';
+                     echo    '</span>';
+                    echo '    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>';
+                    echo '</a>';
+                }else{
+                    echo '<a href="login.php" class="group relative overflow-hidden bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25">';
+                    echo '    <span class="flex items-center relative z-10">';
+                       echo     ' <i class="fas fa-sign-out-alt mr-2 transition-transform duration-300 group-hover:rotate-12"></i>';
+                        echo'    Se Connecter';
+                     echo    '</span>';
+                    echo '    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>';
+                    echo '</a>';
+                }
+                
+                ?>
             </div>
 
             
@@ -152,6 +189,7 @@ require_once('../Classes/Jeu.php');
                 <a href="Joueur/profile.php" class="block text-white hover:text-yellow-400 text-lg font-semibold transition-colors duration-300">
                     <i class="fas fa-user mr-2"></i> Profil
                 </a>
+              
                 <a href="index.php" class="inline-block bg-gradient-to-r from-pink-500 to-yellow-400 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-all duration-300">
                     <i class="fas fa-sign-out-alt mr-2"></i> Se déconnecter
                 </a>
@@ -168,7 +206,7 @@ require_once('../Classes/Jeu.php');
         </video>
         <div class="video-overlay"></div> 
         <div class="relative z-10 px-6 sm:px-12">
-            <h1 class="text-6xl md:text-7xl font-extrabold leading-tight mb-6 text-white text-shadow">Maîtrisez Votre Collection de Jeux Vidéo</h1>
+            <h1 class="text-6xl md:text-7xl font-extrabold leading-tight mb-6  text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 ">Maîtrisez Votre Collection de Jeux Vidéo</h1>
             <p class="text-lg md:text-2xl mb-8 font-light text-white text-opacity-90">Suivez vos jeux, partagez vos critiques et connectez-vous avec d'autres joueurs passionnés.</p>
             <a href="#bibliotheque" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 py-4 px-10 rounded-full text-xl font-semibold btn-hover">
                 Explorer Maintenant

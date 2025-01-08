@@ -1,6 +1,6 @@
 <?php
 
-require_once('../Classes/Bibliotheque.php');
+require_once('../Classes/Historique.php');
 $user_id= $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
@@ -8,7 +8,7 @@ $user_id= $_SESSION['user_id'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bibliothèque de Jeux</title>
+    <title>Ma Bibliothèque de Jeux</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@700&display=swap" rel="stylesheet">
@@ -24,27 +24,11 @@ $user_id= $_SESSION['user_id'];
         transform: translateY(-10px);
     }
 }
-   
-        /* Effet de lumière sur les cartes */
-        .card:hover {
-            box-shadow: 0 10px 25px rgba(255, 165, 0, 0.3), 0 4px 15px rgba(255, 99, 71, 0.3);
-        }
-
-        /* Animation sur les boutons */
-        .btn-hover:hover {
-            transform: scale(1.05) rotate(2deg);
-        }
-
-        /* Titre principal avec glow */
-        .title-glow {
-            text-shadow: 0 4px 6px rgba(255, 255, 255, 0.3);
-        }
     </style>
-</head>
-<body class="bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+<body class="bg-gray-900 font-sans text-gray-100">
 
-
-<nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-black/50 backdrop-blur-sm">
+   
+    <nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-black/50 backdrop-blur-sm">
     <div class="max-w-6xl mx-auto px-4">
        
         <div class="flex justify-between items-center py-4">
@@ -157,63 +141,52 @@ $user_id= $_SESSION['user_id'];
     </div>
     </nav>
 
-    <!-- Section Bibliothèque -->
-    <section id="bibliotheque" class="py-28">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 mb-16 title-glow">
-                Explorez Votre Univers de Jeux
-            </h2>
 
-           
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
-               
-                
-
-                
-    <?php
-    $bibio = new Bibliotheque();
-    $jeux = $bibio->GetBiblio($user_id);
     
-    ?>
-   
-   <?php foreach ($jeux as $jeu): ?>
-                <div class="bg-gray-900 shadow-lg rounded-xl overflow-hidden transform hover:scale-105 card transition-all duration-300 relative">
-                   
-                    
-                    <a  href="addfavoris.php?idfav=<?php echo $jeu['jeu_id']; ?>" class="absolute top-0 left-0 bg-gradient-to-r from-pink-500 to-yellow-400 text-white p-2 rounded-b-lg	 hover:opacity-80 transition-all">
-                        <i class="far fa-heart"></i>
-                    </a>
-                    <a href=deletebibliotheque.php?idbiblio=<?php echo $jeu['jeu_id']; ?> class="absolute bottom-0 right-1 bg-gradient-to-r from-green-500 to-blue-400 text-white p-2 rounded-full hover:opacity-80 transition-all flex items-center justify-center">
-                    <i class="fas fa-minus text-lg"></i>
-                    </a>
-
-
-
-                    
-             
-                    <img src="<?php echo $jeu['image_path']; ?>" alt="<?php echo $jeu['title']; ?>" class="w-full h-60 object-cover">
-
-                    <div class="p-6">
-                        <h3 class="text-3xl font-semibold text-white mb-2"><?php echo $jeu['title']; ?></h3>
-                        <p class="text-yellow-400 text-lg mb-4 uppercase tracking-wide"><?php echo $jeu['type']; ?></p>
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-yellow-400 text-xl">⭐ <?php echo $jeu['rating']; ?>/5</span>
-                        </div>
-                        <div class="flex justify-between items-center space-x-4">
-                        <a href="details-page.php?id_jeu=<?php echo $jeu['jeu_id']; ?>">
-                            <button class="inline-block bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-2 rounded-full hover:shadow-xl hover:opacity-90 transition-all duration-300">
-                            Voir les Détails
-                            </button>
-                        </a>
-
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+    <div class="container mx-auto px-4 pt-32">
         
+            <?php
+    $bibio = new Historique();
+    $jeux = $bibio->GetHistorique($user_id);
+    //print_r($jeux);
+    ?>
+        <h1 class="text-4xl font-bold mb-8 text-center">Mon Historique de Jeux</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+    <?php foreach ($jeux as $jeu): ?>
+        <div class="bg-gray-800 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300">
+            <p class="font-bold mb-8 text-center">Ajouté le 
+                <?php 
+                $date = new DateTime($jeu['add_at']); 
+                echo $date->format('d/m/Y') . " "; 
+                echo "à " . $date->format('H:i'); 
+                ?>
+            </p>
+            <img src="<?php echo $jeu['image_path']; ?>" alt="Game Cover" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-xl font-bold"><?php echo $jeu['title']; ?></h3>
+                    <span class="bg-pink-500 text-xs px-2 py-1 rounded-full"><?php echo $jeu['type']; ?></span>
+                </div>
+                <div class="flex justify-between items-center text-sm text-gray-400 mb-4">
+                    <span>Temps: <?php echo $jeu['temps_jeu']; ?></span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <a href="details-page.php?id_jeu=<?php echo $jeu['jeu_id']; ?>" class="text-pink-500 hover:text-pink-400 transition-colors">
+                        <i class="fas fa-info-circle"></i> Détails
+                    </a>
+                </div>
             </div>
         </div>
-    </section>
+    <?php endforeach; ?>
+</div>
 
+    </div>
+    <script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('hidden');
+    }
+</script>
 </body>
-</html>
+</html> 

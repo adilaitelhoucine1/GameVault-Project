@@ -3,9 +3,9 @@
 
 require_once('../Classes/User.php');
 require_once('../Classes/Jeu.php');
-// if(!($_SESSION['role'] === 'admin')) {
-//   header('Location: login.php');
-// }
+if(!($_SESSION['role'] === 'admin')) {
+  header('Location: login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">

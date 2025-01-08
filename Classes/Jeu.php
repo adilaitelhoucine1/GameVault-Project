@@ -196,10 +196,20 @@ class Jeu extends Connect {
     }
 
     public function AjouterToBiblio($jeu_id, $userID,$image_path) {
+
+
         $connection = $this->getConnection();
+        $connection->beginTransaction();
+
         $sql = "INSERT INTO bibliotheque (joueur_id	, jeu_id,image_path) VALUES (?, ?,?)";
         $stmt = $connection->prepare($sql);
         $stmt->execute([$userID, $jeu_id,$image_path]);
+
+        $sqlHisto = "INSERT INTO historique (joueur_id	, jeu_id,image_path) VALUES (?, ?, ?)";
+        $stmtHisto = $connection->prepare($sqlHisto);
+        $stmtHisto->execute([$userID, $jeu_id,$image_path]);
+
+        $connection->commit();
     }
 }
 //     $jeu=new Jeu();

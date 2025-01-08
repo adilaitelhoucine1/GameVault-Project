@@ -30,26 +30,135 @@ if (isset($_GET['id_jeu'])) {
     <title>Détails du Jeu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <style>
+         .animate-bounce {
+    animation: bounce 1.5s infinite;
+}
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+    </style>
 </head>
 <body class="bg-gray-900 font-sans text-gray-100">
-<nav class="bg-black bg-opacity-50  w-full z-20 top-0 left-0 py-6 shadow-lg">
-        <div class="max-w-6xl mx-auto flex justify-between content-center   items-center px-6">
-            <div class="text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400">
-                JeuxVidéo Manager
-            </div>
-            <div class="space-x-8 hidden sm:flex ">
-                <a href="UserHome.php" class="navbar-link text-lg font-semibold">Accueil</a>
-                <a href="" class="navbar-link text-lg font-semibold">Ma Bibliothèque</a>
-                <a href="" class="navbar-link text-lg font-semibold">Chat</a>
-                <a href="FavorisList.php" class="navbar-link text-lg font-semibold">Favoris</a>
+<nav class="fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-black/50 backdrop-blur-sm">
+    <div class="max-w-6xl mx-auto px-4">
+       
+        <div class="flex justify-between items-center py-4">
+            
+            <div class="group">
+            <h1 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-pink-500 to-yellow-400 hover:scale-110 transform transition-transform duration-300 tracking-wide drop-shadow-lg">
+    <span class="block font-[Lobster] animate-bounce text-white">
+        LO3AB
+    </span>
+   
+</h1>
 
-                <a href="Joueur/profile.php" class="navbar-link text-lg font-semibold">Profil</a>
-                <a href="index.php" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-6 py-3 rounded-full text-lg font-semibold btn-hover">
-                    Se déconnecter
+                <div class="w-0 group-hover:w-full h-0.5 bg-gradient-to-r from-pink-500 to-yellow-400 transition-all duration-300"></div>
+            </div>
+
+            
+            <div class="hidden lg:flex items-center space-x-8">
+             
+                <a href="UserHome.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
+                    <span class="flex items-center">
+                        <i class="fas fa-home mr-2 transition-transform duration-300 group-hover:scale-110"></i>
+                        Accueil
+                    </span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+
+                
+                <a href="BibiothequeLsit.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
+                    <span class="flex items-center">
+                        <i class="fas fa-book mr-2 transition-transform duration-300 group-hover:scale-110"></i>
+                            Bibliothèque
+                    </span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+
+                
+                <a href="FavorisList.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
+                    <span class="flex items-center">
+                        <i class="fas fa-heart mr-2 transition-transform duration-300 group-hover:scale-110"></i>
+                        Favoris
+                    </span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="Historique.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
+                    <span class="flex items-center">
+                        <i class="fas fa-heart mr-2 transition-transform duration-300 group-hover:scale-110"></i>
+                        Historique
+                    </span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+
+                
+                <a href="Joueur/profile.php" class="group relative text-lg font-semibold text-white transition-all duration-300 hover:text-yellow-400">
+                    <span class="flex items-center">
+                        <i class="fas fa-user mr-2 transition-transform duration-300 group-hover:scale-110"></i>
+                        Profil
+                    </span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+
+                <?php if(!empty($_SESSION['user_id'])){
+
+                    echo '<a href="index.php" class="group relative overflow-hidden bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25">';
+                    echo '    <span class="flex items-center relative z-10">';
+                       echo     ' <i class="fas fa-sign-out-alt mr-2 transition-transform duration-300 group-hover:rotate-12"></i>';
+                        echo'    Se déconnecter';
+                     echo    '</span>';
+                    echo '    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>';
+                    echo '</a>';
+                }else{
+                    echo '<a href="login.php" class="group relative overflow-hidden bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25">';
+                    echo '    <span class="flex items-center relative z-10">';
+                       echo     ' <i class="fas fa-sign-out-alt mr-2 transition-transform duration-300 group-hover:rotate-12"></i>';
+                        echo'    Se Connecter';
+                     echo    '</span>';
+                    echo '    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>';
+                    echo '</a>';
+                }
+                
+                ?>
+            </div>
+
+            
+            <button onclick="toggleMobileMenu()" class="lg:hidden text-white hover:text-yellow-400 transition-colors duration-300">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile  -->
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <div class="pb-4 space-y-4">
+                <a href="#" class="block text-white hover:text-yellow-400 text-lg font-semibold transition-colors duration-300">
+                    <i class="fas fa-home mr-2"></i> Accueil
+                </a>
+                <a href="#bibliotheque" class="block text-white hover:text-yellow-400 text-lg font-semibold transition-colors duration-300">
+                    <i class="fas fa-book mr-2"></i> Ma Bibliothèque
+                </a>
+                <a href="FavorisList.php" class="block text-white hover:text-yellow-400 text-lg font-semibold transition-colors duration-300">
+                    <i class="fas fa-heart mr-2"></i> Favoris
+                </a>
+                <a href="Joueur/profile.php" class="block text-white hover:text-yellow-400 text-lg font-semibold transition-colors duration-300">
+                    <i class="fas fa-user mr-2"></i> Profil
+                </a>
+              
+                <a href="index.php" class="inline-block bg-gradient-to-r from-pink-500 to-yellow-400 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition-all duration-300">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Se déconnecter
                 </a>
             </div>
         </div>
+    </div>
     </nav>
+
 
     <div class="relative min-h-screen">
         <div class="container mx-auto px-4 pt-32">
