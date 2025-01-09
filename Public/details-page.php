@@ -223,6 +223,18 @@ if (isset($_GET['id_jeu'])) {
                     <div class="bg-gray-800 rounded-xl h-[800px] flex flex-col">
                         <div class="p-4 border-b border-gray-700">
                             <h2 class="text-xl font-bold">Discussion du jeu</h2>
+                            <span id="banned-message" class="block mt-4">
+    <?php if ($_SESSION['status'] == "banned") : ?>
+        <div class="flex items-center justify-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg" role="alert">
+            <svg class="w-6 h-6 mr-2 fill-current text-red-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M10 15a1 1 0 010 2 1 1 0 010-2zm.93-12.36a8 8 0 11-1.86 0L9 9h2l-.07-6.36z"/>
+            </svg>
+            <span class="font-bold">Access Denied:</span> You are banned from using this platform.
+        </div>
+    <?php endif; ?>
+</span>
+
+
                         </div>
                         
                         <div class="flex-1 overflow-y-auto p-4 space-y-4">
@@ -366,6 +378,16 @@ if (isset($_GET['id_jeu'])) {
     showRating.addEventListener("click", () => {
       modal.classList.remove("hidden");
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const bannedMessage = document.getElementById("banned-message");
+        if (bannedMessage) {
+            setTimeout(() => {
+                bannedMessage.style.display = "none";
+            }, 5000); // 5000 milliseconds = 5 seconds
+        }
+    });
+
   </script>
 
 </body>

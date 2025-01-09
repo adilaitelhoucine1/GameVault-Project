@@ -40,6 +40,7 @@ class User extends Connect {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['role'] = $user['Role']; 
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['status'] = $user['User_Status'];
                 
                // error_log("User role: " . $user['Role']);
                 
@@ -149,6 +150,15 @@ class User extends Connect {
         $sqlUpdate = "UPDATE users SET username = ?, email = ?, password = ? WHERE user_id = ?";
         $stmtUpdate = $connection->prepare($sqlUpdate);
         $stmtUpdate->execute([$username, $email, $hashedPassword, $user_id]);
+    }
+    public function CheckBanned($user_id){
+        $connection = $this->getConnection();
+        $checkSql = "SELECT User_Status FROM users WHERE user_id = ?";
+        $stmt = $connection->prepare($checkSql);
+        $stmt->execute([$user_id]);
+        $result=$stmt->fetch();
+        return $result['User_Status'];  
+
     }
 }
 //  $user = new User();
