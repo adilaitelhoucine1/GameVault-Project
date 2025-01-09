@@ -2,6 +2,9 @@
 
 require_once('../Classes/Bibliotheque.php');
 $user_id= $_SESSION['user_id'];
+if(empty($_SESSION['role'])) {
+    header('Location: login.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="fr">

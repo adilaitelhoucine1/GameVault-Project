@@ -1,7 +1,10 @@
 <?php
 
 require_once('../../Classes/User.php');
-
+if(empty($_SESSION['role'])) {
+    header('Location: login.php');
+  }
+  
 $user_id = $_SESSION['user_id'];
 if(isset($_POST['profile_update'])) {
     $username = $_POST['username'];

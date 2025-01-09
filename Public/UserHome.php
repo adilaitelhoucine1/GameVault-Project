@@ -1,6 +1,9 @@
 <?php
 
 require_once('../Classes/Jeu.php');
+if(empty($_SESSION['role'])) {
+    header('Location: login.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -14,6 +17,25 @@ require_once('../Classes/Jeu.php');
 
 
     <style>
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .animate-marquee {
+        display: flex;
+        animation: marquee 300s linear infinite;
+    }
+
+    .animate-marquee .bg-gray-800 {
+        margin-right: 2rem;
+    }
+
         .animate-bounce {
     animation: bounce 1.5s infinite;
 }
@@ -26,22 +48,18 @@ require_once('../Classes/Jeu.php');
     }
 }
 
-        /* Smooth transitions */
         .transition-all {
             transition: all 0.3s ease-in-out;
         }
         .scale-110:hover {
             transform: scale(1.1);
         }
-        /* Custom text-shadow for titles */
         .text-shadow {
             text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
-        /* Button animation */
         .btn-hover:active {
             transform: scale(0.98);
         }
-        /* Video container to cover the screen */
         .video-container {
             position: absolute;
             top: 0;
@@ -51,7 +69,6 @@ require_once('../Classes/Jeu.php');
             object-fit: cover;
             z-index: -1;
         }
-        /* Custom navbar styling */
         .navbar-link {
             color: white;
             transition: color 0.3s ease, transform 0.3s ease;
@@ -60,17 +77,15 @@ require_once('../Classes/Jeu.php');
             color: #fbbf24;
             transform: scale(1.1);
         }
-        /* Enhanced button hover */
         .btn-hover:hover {
             background-color: #fbbf24;
             color: #1f2937;
             transform: scale(1.05);
         }
-        /* Better overlay for the video */
         .video-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5); /* Darker overlay for better contrast */
+            background: rgba(0, 0, 0, 0.5); 
         }
         @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
@@ -80,7 +95,7 @@ require_once('../Classes/Jeu.php');
 .animate-fade-in {
     animation: fadeIn 0.3s ease-out forwards;
 }
-    </style>
+</style>
 </head>
 <body class="bg-gray-900 font-sans text-gray-100">
 
@@ -148,18 +163,10 @@ require_once('../Classes/Jeu.php');
 
                 <?php if(!empty($_SESSION['user_id'])){
 
-                    echo '<a href="index.php" class="group relative overflow-hidden bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25">';
-                    echo '    <span class="flex items-center relative z-10">';
-                       echo     ' <i class="fas fa-sign-out-alt mr-2 transition-transform duration-300 group-hover:rotate-12"></i>';
-                        echo'    Se déconnecter';
-                     echo    '</span>';
-                    echo '    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>';
-                    echo '</a>';
-                }else{
                     echo '<a href="login.php" class="group relative overflow-hidden bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25">';
                     echo '    <span class="flex items-center relative z-10">';
                        echo     ' <i class="fas fa-sign-out-alt mr-2 transition-transform duration-300 group-hover:rotate-12"></i>';
-                        echo'    Se Connecter';
+                        echo'    Se déconnecter';
                      echo    '</span>';
                     echo '    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>';
                     echo '</a>';
@@ -214,7 +221,7 @@ require_once('../Classes/Jeu.php');
         </div>
     </section>
 
-    <section id="bibliotheque" class="py-28 bg-gray-800">
+    <section id="bibliotheque" class="py-28  bg-gradient-to-b from-gray-900 to-black">
     <?php
     $jeu = new Jeu();
     $jeux = $jeu->getgamewithscreen();
@@ -268,29 +275,148 @@ require_once('../Classes/Jeu.php');
 
 
     
-    <section id="chat" class="py-28 bg-white">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-yellow-400 mb-16">Rejoignez la Communauté</h2>
-            <div class="flex flex-col sm:flex-row justify-between items-center space-y-12 sm:space-y-0 sm:space-x-8">
-               
-                <div class="bg-white p-10 rounded-xl shadow-2xl w-full sm:w-1/3 transform hover:scale-105 transition-all">
-                    <h3 class="text-4xl font-semibold text-gray-800 mb-6">Mon Profil</h3>
-                    <p class="text-gray-600 mb-8">Consultez et personnalisez votre profil. Gérez vos jeux et suivez vos statistiques.</p>
-                    <a href="Joueur/profile.php" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 py-4 px-8 rounded-full text-xl font-semibold btn-hover">
-                        Voir Profil
-                    </a>
+<section id="trending-games" class="py-28 bg-gradient-to-b from-gray-900 to-black text-white">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-500 mb-16">
+            Jeux Tendance
+        </h2>
+        
+        <!-- Trending Games Animation Container -->
+        <div class="relative overflow-hidden">
+            <div class="flex space-x-8 animate-marquee">
+                <!-- Game Card 1 -->
+                <div class="bg-gray-800 rounded-xl shadow-lg transform hover:scale-105 transition-all">
+                    <img
+                        src="https://storage.googleapis.com/pod_public/1300/216712.jpg"
+                        alt="Elden Ring"
+                        class="rounded-t-lg w-full h-48 object-cover"
+                    />
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Elden Ring</h3>
+                        <p class="text-gray-400 mb-4">
+                            Explorez un monde fantastique avec des combats intenses et une histoire captivante.
+                        </p>
+                        <a
+                            href="#"
+                            class="bg-gradient-to-r from-yellow-400 to-red-500 py-2 px-4 rounded-full text-lg font-semibold text-gray-900"
+                        >
+                            Découvrir
+                        </a>
+                    </div>
                 </div>
-            
-                <div class="bg-white p-10 rounded-xl shadow-2xl w-full sm:w-1/3 transform hover:scale-105 transition-all">
-                    <h3 class="text-4xl font-semibold text-gray-800 mb-6">Chat Communautaire</h3>
-                    <p class="text-gray-600 mb-8">Partagez vos expériences de jeux et discutez avec d'autres joueurs dans des salons dédiés.</p>
-                    <a href="#" class="bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 py-4 px-8 rounded-full text-xl font-semibold btn-hover">
-                        Rejoindre le Chat
-                    </a>
+
+                <!-- Game Card 2 -->
+                <div class="bg-gray-800 rounded-xl shadow-lg transform hover:scale-105 transition-all">
+                    <img
+                        src="https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png"
+                        alt="God of War"
+                        class="rounded-t-lg w-full h-48 object-cover"
+                    />
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">God of War</h3>
+                        <p class="text-gray-400 mb-4">
+                            Plongez dans un voyage épique avec Kratos et Atreus dans des mondes légendaires.
+                        </p>
+                        <a
+                            href="#"
+                            class="bg-gradient-to-r from-yellow-400 to-red-500 py-2 px-4 rounded-full text-lg font-semibold text-gray-900"
+                        >
+                            Découvrir
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Game Card 3 -->
+                <div class="bg-gray-800 rounded-xl shadow-lg transform hover:scale-105 transition-all">
+                    <img
+                        src="https://assets.xboxservices.com/assets/71/b5/71b50f29-5799-4be1-97ef-d58d57c9fe37.jpg?n=CoD-Modern-Warfare-III_GLP-Page-Hero-0_1083x1222_02.jpg"
+                        alt="Call of Duty"
+                        class="rounded-t-lg w-full h-48 object-cover"
+                    />
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Call of Duty</h3>
+                        <p class="text-gray-400 mb-4">
+                            Découvrez l'action multijoueur ultime et une campagne palpitante.
+                        </p>
+                        <a
+                            href="#"
+                            class="bg-gradient-to-r from-yellow-400 to-red-500 py-2 px-4 rounded-full text-lg font-semibold text-gray-900"
+                        >
+                            Découvrir
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Game Card 4 -->
+                <div class="bg-gray-800 rounded-xl shadow-lg transform hover:scale-105 transition-all">
+                    <img
+                        src="https://image.jeuxvideo.com/medias/165165/1651652506-3619-jaquette-avant.jpg"
+                        alt="Red Dead Redemption 2"
+                        class="rounded-t-lg w-full h-48 object-cover"
+                    />
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Red Dead Redemption 2</h3>
+                        <p class="text-gray-400 mb-4">
+                            Vivez l'aventure dans l'Ouest sauvage avec des graphismes époustouflants et une narration captivante.
+                        </p>
+                        <a
+                            href="#"
+                            class="bg-gradient-to-r from-yellow-400 to-red-500 py-2 px-4 rounded-full text-lg font-semibold text-gray-900"
+                        >
+                            Découvrir
+                        </a>
+                    </div>
+                </div>
+                <!-- Game Card 4 -->
+                <div class="bg-gray-800 rounded-xl shadow-lg transform hover:scale-105 transition-all">
+                    <img
+                        src="https://d13ms5efar3wc5.cloudfront.net/eyJidWNrZXQiOiJpbWFnZXMtY2Fycnkxc3QtcHJvZHVjdHMiLCJrZXkiOiI2NWY3YzgxZi0yNDQxLTRhZGYtODMyMS1hOTY4ODM3NGU1MzEucG5nLndlYnAiLCJlZGl0cyI6eyJyZXNpemUiOnt9fSwid2VicCI6eyJxdWFsaXR5Ijo3NX19"
+                        alt="Red Dead Redemption 2"
+                        class="rounded-t-lg w-full h-48 object-cover"
+                    />
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Free Fire</h3>
+                        <p class="text-gray-400 mb-4">
+                            Vivez l'aventure dans l'Ouest sauvage avec des graphismes époustouflants et une narration captivante.
+                        </p>
+                        <a
+                            href="#"
+                            class="bg-gradient-to-r from-yellow-400 to-red-500 py-2 px-4 rounded-full text-lg font-semibold text-gray-900"
+                        >
+                            Découvrir
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Game Card 5 -->
+                <div class="bg-gray-800 rounded-xl shadow-lg transform hover:scale-105 transition-all">
+                    <img
+                        src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Cyberpunk_2077_box_art.jpg/220px-Cyberpunk_2077_box_art.jpg"
+                        alt="Cyberpunk 2077"
+                        class="rounded-t-lg w-full h-48 object-cover"
+                    />
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-yellow-400 mb-2">Cyberpunk 2077</h3>
+                        <p class="text-gray-400 mb-4">
+                            Immersion dans un futur cybernétique avec une grande liberté de choix et des missions palpitantes.
+                        </p>
+                        <a
+                            href="#"
+                            class="bg-gradient-to-r from-yellow-400 to-red-500 py-2 px-4 rounded-full text-lg font-semibold text-gray-900"
+                        >
+                            Découvrir
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+
+
+
+
 
     <!-- Footer -->
     <footer class="bg-gray-900 py-12">

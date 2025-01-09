@@ -17,12 +17,21 @@ class Notation extends Connect{
         return $stmt->fetchAll();
     }
 
-    public function ajouter_notation($user_id,$jeu_id,$rating,$content) {
+    public function ajouter_notation($user_id, $jeu_id, $rating, $content) {
         $connection = $this->getConnection();
-        $sql = "INSERT INTO notation (joueur_id,jeu_id,rating,content) VALUES (?, ? ,? ,?)";
-        $stmt = $connection->prepare($sql);
-        $stmt->execute([$user_id, $jeu_id, $rating, $content]);
+    
+        $checkSql = "SELECT COUNT(*) FROM notation WHERE joueur_id = ? AND jeu_id = ?";
+        $stmt = $connection->prepare($checkSql);
+        $stmt->execute([$user_id, $jeu_id]);
+        $exists = $stmt->fetchColumn();
+    
+        if (!$exists) {
+            $insertSql = "INSERT INTO notation (joueur_id, jeu_id, rating, content) VALUES (?, ?, ?, ?)";
+            $stmt = $connection->prepare($insertSql);
+            $stmt->execute([$user_id, $jeu_id, $rating, $content]);
+        }
     }
+    
 
     public function getAvgReviews($id_jeu) {
         $connection = $this->getConnection();

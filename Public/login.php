@@ -31,13 +31,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion - JeuxVidéo Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+
+    <style>
+        .animate-bounce {
+    animation: bounce 1.5s infinite;
+}
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+</style>
 </head>
 <body class="bg-gray-900 text-white">
 
     <!-- Navbar -->
     <nav class="bg-gray-800 p-6 fixed top-0 left-0 w-full z-10">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-3xl font-bold text-yellow-500">JeuxVidéo Manager</div>
+            <div class="text-3xl font-bold text-yellow-500">    <span class="block font-[Lobster] animate-bounce text-white">
+        LO3AB
+    </span></div>
         </div>
     </nav>
 

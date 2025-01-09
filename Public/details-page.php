@@ -2,7 +2,9 @@
 require_once('../Classes/Jeu.php');
 require_once('../Classes/Notation.php');
 require_once('../Classes/Chat.php');
-
+if(empty($_SESSION['username'])) {
+    header('Location: login.php');
+}
 //$jeu_details = [];
 $jeu_id = $_GET['id_jeu'];
 if (isset($_GET['id_jeu'])) {
@@ -112,7 +114,7 @@ if (isset($_GET['id_jeu'])) {
                     echo '<a href="index.php" class="group relative overflow-hidden bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25">';
                     echo '    <span class="flex items-center relative z-10">';
                        echo     ' <i class="fas fa-sign-out-alt mr-2 transition-transform duration-300 group-hover:rotate-12"></i>';
-                        echo'    Se déconnecter';
+                        echo'    Se déconnecter';   
                      echo    '</span>';
                     echo '    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>';
                     echo '</a>';

@@ -156,9 +156,15 @@ class Jeu extends Connect {
     
     public function addToFavoris($user_id, $jeu_id) {
         $connection = $this->getConnection();
-        $sql = "INSERT INTO favoris (user_id, jeu_id) VALUES (?, ?)";
-        $stmt = $connection->prepare($sql);
-        return $stmt->execute([$user_id, $jeu_id]);
+        $checkSql = "SELECT COUNT(*) FROM favoris WHERE user_id = ? AND jeu_id = ?";
+        $stmt = $connection->prepare($checkSql);
+        $stmt->execute([$user_id, $jeu_id]);
+        $exists = $stmt->fetchColumn();
+        if(!$exists){
+            $sql = "INSERT INTO favoris (user_id, jeu_id) VALUES (?, ?)";
+            $stmt = $connection->prepare($sql);
+            return $stmt->execute([$user_id, $jeu_id]);
+        }
     }
     
 
@@ -200,14 +206,29 @@ class Jeu extends Connect {
 
         $connection = $this->getConnection();
         $connection->beginTransaction();
+        $checkSql = "SELECT COUNT(*) FROM bibliotheque WHERE joueur_id = ? AND jeu_id = ?";
+        $stmt = $connection->prepare($checkSql);
+        $stmt->execute([$userID, $jeu_id]);
+        $exists = $stmt->fetchColumn();
+        if(!$exists){
 
-        $sql = "INSERT INTO bibliotheque (joueur_id	, jeu_id,image_path) VALUES (?, ?,?)";
-        $stmt = $connection->prepare($sql);
-        $stmt->execute([$userID, $jeu_id,$image_path]);
+    
+            $sql = "INSERT INTO bibliotheque (joueur_id	, jeu_id,image_path) VALUES (?, ?,?)";
+            $stmt = $connection->prepare($sql);
+            $stmt->execute([$userID, $jeu_id,$image_path]);
+        }
 
-        $sqlHisto = "INSERT INTO historique (joueur_id	, jeu_id,image_path) VALUES (?, ?, ?)";
-        $stmtHisto = $connection->prepare($sqlHisto);
-        $stmtHisto->execute([$userID, $jeu_id,$image_path]);
+        $checkSql = "SELECT COUNT(*) FROM historique WHERE joueur_id = ? AND jeu_id = ?";
+        $stmt = $connection->prepare($checkSql);
+        $stmt->execute([$userID, $jeu_id]);
+        $existsHisto = $stmt->fetchColumn();
+        if(!$existsHisto){
+
+            $sqlHisto = "INSERT INTO historique (joueur_id	, jeu_id,image_path) VALUES (?, ?, ?)";
+            $stmtHisto = $connection->prepare($sqlHisto);
+            $stmtHisto->execute([$userID, $jeu_id,$image_path]);
+        }
+
 
         $connection->commit();
     }

@@ -1,6 +1,9 @@
 <?php
 require_once('../Classes/Jeu.php');
 $jeu = new Jeu();
+if(empty($_SESSION['role'])) {
+    header('Location: login.php');
+  }
 ?>
 
 <!DOCTYPE html>
