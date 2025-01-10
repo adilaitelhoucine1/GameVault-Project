@@ -215,6 +215,15 @@ if(empty($_SESSION['role'])) {
             <?php endforeach; ?>
         
             </div>
+            <?php if (empty($jeux)): ?>
+                <div class="text-center py-20">
+                    <i class="fas fa-heart-broken text-6xl text-pink-500 mb-6"></i>
+                    <p class="text-2xl text-gray-400">Vous n'avez pas encore de jeux dans votre Bibliothèque</p>
+                    <a href="UserHome.php#bibliotheque" class="inline-block mt-6 bg-gradient-to-r from-pink-500 to-yellow-400 text-gray-900 px-8 py-3 rounded-full font-semibold hover:opacity-90 transition-all">
+                        Découvrir des jeux
+                    </a>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 
