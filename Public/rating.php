@@ -12,6 +12,7 @@ $reviewContent=$_POST['reviewContent'];
 // echo "<br>";
 // echo $user_id;
 $notation = new Notation();
+
 $notation->ajouter_notation($user_id,$jeuID,$rate,$reviewContent);
 header("Location: details-page.php?id_jeu=" . urlencode($jeuID));
 

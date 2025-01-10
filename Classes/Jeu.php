@@ -155,7 +155,7 @@ class Jeu extends Connect {
     }
     
     public function addToFavoris($user_id, $jeu_id) {
-        $connection = $this->getConnection();
+         $connection = $this->getConnection();
         $checkSql = "SELECT COUNT(*) FROM favoris WHERE user_id = ? AND jeu_id = ?";
         $stmt = $connection->prepare($checkSql);
         $stmt->execute([$user_id, $jeu_id]);
@@ -164,7 +164,7 @@ class Jeu extends Connect {
             $sql = "INSERT INTO favoris (user_id, jeu_id) VALUES (?, ?)";
             $stmt = $connection->prepare($sql);
             return $stmt->execute([$user_id, $jeu_id]);
-        }
+       }
     }
     
 

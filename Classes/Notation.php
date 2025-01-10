@@ -18,18 +18,11 @@ class Notation extends Connect{
     }
 
     public function ajouter_notation($user_id, $jeu_id, $rating, $content) {
-        $connection = $this->getConnection();
-    
-        $checkSql = "SELECT COUNT(*) FROM notation WHERE joueur_id = ? AND jeu_id = ?";
-        $stmt = $connection->prepare($checkSql);
-        $stmt->execute([$user_id, $jeu_id]);
-        $exists = $stmt->fetchColumn();
-    
-        if (!$exists) {
+            $connection = $this->getConnection();
             $insertSql = "INSERT INTO notation (joueur_id, jeu_id, rating, content) VALUES (?, ?, ?, ?)";
             $stmt = $connection->prepare($insertSql);
             $stmt->execute([$user_id, $jeu_id, $rating, $content]);
-        }
+        
     }
     
 
