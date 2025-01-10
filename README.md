@@ -1,3 +1,4 @@
+https://adilaitelho.atlassian.net/jira/software/projects/GAM/boards/6?assignee=712020%3Ac203629d-6004-4144-9223-1b3a1dbd7c05&atlOrigin=eyJpIjoiZDBlODRhOGJkNWI5NGY3YmJjMTljODEyMjM4NGE3NmEiLCJwIjoiaiJ9
 # 🎮 **Video Game Collection Management Platform**  
 
 🚀 **Description**  
